@@ -1,0 +1,15 @@
+.button-block {
+	width: 100%;
+
+	padding: 0 20px;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	gap: 12px;
+
+	position: relative;
+	top: 480px;
+	left: 0; 
+
+	z-index: 2;
+}

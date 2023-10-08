@@ -1,0 +1,19 @@
+.heading {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	justify-content: flex-start;
+	align-items: center;
+}
+
+.heading-title {
+	font-size: 24px;
+	font-weight: 500;
+	color: #121212;
+}
+
+.heading-description {
+	font-size: 14px;
+	font-weight: 400;
+	color: #939199;
+}

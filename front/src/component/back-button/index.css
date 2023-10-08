@@ -1,0 +1,17 @@
+.back-button {
+	transition-property: opacity;
+	transition-duration: 0.5s;
+
+	position: absolute;
+	top: calc(50% - 12px);
+	left: 0;
+}
+
+.back-button:hover {
+	opacity: 0.8;
+}
+
+.back-button:active {
+	opacity: 0.2;
+}
+

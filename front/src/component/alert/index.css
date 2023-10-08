@@ -1,0 +1,45 @@
+.alert {
+	padding: 16px;
+	border: 1px solid transparent;
+	border-radius: 10px;
+	font-size: 14px;
+	font-weight: 400;
+	text-align: left;
+	position: relative;
+
+	display: none;
+}
+
+.alert--error {
+	border-color: #fceade;
+	background-color: #fceade;
+	color: #F2883D;
+	padding: 16px 16px 16px 48px ;
+}
+
+.alert--error-img {
+	width: 16px;
+	height: 16px;
+	background-image: url('../../../public/svg/alert-button.svg');
+	background-repeat: no-repeat;
+
+	position: absolute;
+	top: calc(50% - 8px);
+	left: 16px;
+}
+
+.alert---img {
+	display: none;
+}
+
+.alert--success {
+	border-color: #b1f5ae;
+	background-color: #ebfcea;
+	color: #24B277;
+}
+
+.alert--progress {
+	border-color: #d4e4fa;
+	background-color: #ecf2fc;
+	color: #5894E9;
+}
