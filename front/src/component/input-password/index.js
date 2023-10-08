@@ -1,4 +1,4 @@
-// унверсальная строка ввода
+// унверсальная строка для пароля
 import "./index.css";
 
 import { useState, useRef } from "react";
@@ -21,17 +21,21 @@ export default function Component({
 
   const fieldSpan = useRef(null);
 
-  const [show, setShow] = useState(false);
-
-  const [type, setType] = useState("password");
+  const [fieldPass, setFieldPass] = useState({ show: false, type: "password" });
 
   const handleClick = () => {
     fieldSpan.current.classList.toggle("show");
-    setShow(!show);
 
-    setType((type) => {
-      if (type === "password") return (type = "text");
-      if (type === "text") return (type = "password");
+    setFieldPass(({ show, type }) => {
+      show = !show;
+      if (type === "password") {
+        type = "text";
+      } else {
+        type = "password";
+      }
+      console.log(show, type);
+
+      return { show, type };
     });
   };
 
@@ -44,7 +48,7 @@ export default function Component({
       <div className="field__wrapper">
         <input
           className={`field__input field__input--${className}`}
-          type={type}
+          type={fieldPass.type}
           name={name}
           placeholder={placeholder}
           onChange={handleChange}
