@@ -5,7 +5,7 @@ class User {
   constructor({ email, password }) {
     this.email = email;
     this.password = password;
-    this.isConfirm = false;
+    this.isConfirm = false; //? может оно и не нужно
     this.id = Math.trunc(Math.random() * 1000) + 1000;
   }
 

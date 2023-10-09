@@ -58,6 +58,7 @@ export class SignupForm {
     }
 
     console.log(this.error);
+    console.log(this.value);
   };
 
   static submit = () => {

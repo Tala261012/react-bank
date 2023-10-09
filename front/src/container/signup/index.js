@@ -1,6 +1,7 @@
 // хедер с кнопкой "назад"
 import "./index.css";
 import { SignupForm } from "../../utils/form";
+import { setError } from "../../utils/scripts";
 
 import { useState, useRef } from "react";
 import Button from "../../component/button";
@@ -8,18 +9,6 @@ import Form from "../../component/form";
 import Alert from "../../component/alert";
 import InputItem from "../../component/input-item";
 import InputPassword from "../../component/input-password";
-
-function setError(key, stateFunction, refName) {
-  if (SignupForm.error.hasOwnProperty(key)) {
-    stateFunction(true);
-
-    refName.current.classList.toggle("form__error--active", true);
-    refName.current.innerText = SignupForm.error.email;
-  } else {
-    stateFunction(false);
-    refName.current.classList.toggle("form__error--active", false);
-  }
-}
 
 export default function Component() {
   const handleSubmit = () => {
@@ -39,15 +28,7 @@ export default function Component() {
   const handleEmailChange = (value) => {
     SignupForm.change("email", value);
 
-    if (SignupForm.error.hasOwnProperty("email")) {
-      setEmailError(true);
-
-      emailSpan.current.classList.toggle("form__error--active", true);
-      emailSpan.current.innerText = SignupForm.error.email;
-    } else {
-      setEmailError(false);
-      emailSpan.current.classList.toggle("form__error--active", false);
-    }
+    setError(SignupForm, "email", setEmailError, emailSpan);
 
     setEmail(value);
   };
@@ -59,15 +40,7 @@ export default function Component() {
   const handlePasswordChange = (value) => {
     SignupForm.change("password", value);
 
-    if (SignupForm.error.hasOwnProperty("password")) {
-      setPasswordError(true);
-
-      passwordSpan.current.classList.toggle("form__error--active", true);
-      passwordSpan.current.innerText = SignupForm.error.password;
-    } else {
-      setPasswordError(false);
-      passwordSpan.current.classList.toggle("form__error--active", false);
-    }
+    setError(SignupForm, "password", setPasswordError, passwordSpan);
 
     setPassword(value);
   };
@@ -79,18 +52,12 @@ export default function Component() {
   const handlePasswordConfirmChange = (value) => {
     SignupForm.change("passwordConfirm", value);
 
-    if (SignupForm.error.hasOwnProperty("passwordConfirm")) {
-      setPasswordConfirmError(true);
-
-      passwordConfirmSpan.current.classList.toggle("form__error--active", true);
-      passwordConfirmSpan.current.innerText = SignupForm.error.passwordConfirm;
-    } else {
-      setPasswordConfirmError(false);
-      passwordConfirmSpan.current.classList.toggle(
-        "form__error--active",
-        false
-      );
-    }
+    setError(
+      SignupForm,
+      "passwordConfirm",
+      setPasswordConfirmError,
+      passwordConfirmSpan
+    );
 
     setPasswordConfirm(value);
   };
