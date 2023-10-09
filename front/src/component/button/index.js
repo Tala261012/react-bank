@@ -5,7 +5,7 @@ export default function Component({
   text,
   className,
   onClick,
-  isDisabled = false,
+  isDisabled = true,
 }) {
   return (
     <button

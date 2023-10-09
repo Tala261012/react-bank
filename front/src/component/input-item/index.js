@@ -4,11 +4,10 @@ import "./index.css";
 import { useState } from "react";
 
 export default function Component({
-  name = "",
   label = "",
   type = "text",
   placeholder = "",
-  className = "",
+  isError = false,
   onChange,
 }) {
   const [inputValue, setInputValue] = useState("");
@@ -22,13 +21,18 @@ export default function Component({
 
   return (
     <div className="field">
-      <label className={`field__label field__label--${className}`}>
+      <label
+        className={
+          isError ? "field__label field__label--error" : "field__label"
+        }
+      >
         {label}
       </label>
       <input
-        className={`field__input field__input--${className}`}
+        className={
+          isError ? `field__input field__input--error` : "field__input"
+        }
         type={type}
-        name={name}
         placeholder={placeholder}
         onChange={handleChange}
       />

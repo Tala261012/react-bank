@@ -7,7 +7,7 @@
 	text-align: left;
 	position: relative;
 
-	display: none;
+	/* display: none; */
 }
 
 .alert--error {

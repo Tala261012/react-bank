@@ -38,6 +38,6 @@
 }
 
 .field__input--error {
-	border-color: #F23152;
+	border-color: #F23152 !important;
 	color: #F23152;
 }

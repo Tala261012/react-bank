@@ -21,7 +21,6 @@ export default function Component() {
     <Form>
       <div>
         <InputItem
-          name={"code"}
           type={"text"}
           label={"Code:"}
           placeholder={"Enter your code from email"}

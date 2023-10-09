@@ -4,10 +4,9 @@ import "./index.css";
 import { useState, useRef } from "react";
 
 export default function Component({
-  name = "",
   label = "",
   placeholder = "",
-  className = "",
+  isError = false,
   onChange,
 }) {
   const [inputValue, setInputValue] = useState("");
@@ -33,23 +32,26 @@ export default function Component({
       } else {
         type = "password";
       }
-      console.log(show, type);
-
       return { show, type };
     });
   };
 
   return (
     <div className="field">
-      <label className={`field__label field__label--${className}`}>
+      <label
+        className={
+          isError ? "field__label field__label--error" : "field__label"
+        }
+      >
         {label}
       </label>
 
       <div className="field__wrapper">
         <input
-          className={`field__input field__input--${className}`}
+          className={
+            isError ? "field__input field__input--error" : "field__input"
+          }
           type={fieldPass.type}
-          name={name}
           placeholder={placeholder}
           onChange={handleChange}
         />
