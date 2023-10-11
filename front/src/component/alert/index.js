@@ -3,13 +3,13 @@ import "./index.css";
 
 export default function Component({
   className = "",
-  message = "",
+  alertText = "",
   style = {},
 }) {
   return (
     <div style={style} className={`alert alert--${className}`}>
       <div className={`alert--${className}-img`}></div>
-      <div>{message}</div>
+      <div>{alertText}</div>
     </div>
   );
 }

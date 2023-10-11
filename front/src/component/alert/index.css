@@ -28,6 +28,10 @@
 	left: 16px;
 }
 
+.alert--disabled {
+	display: none;
+}
+
 .alert---img {
 	display: none;
 }

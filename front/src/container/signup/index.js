@@ -11,6 +11,28 @@ import InputItem from "../../component/input-item";
 import InputPassword from "../../component/input-password";
 
 export default function Component() {
+  const submit = async () => {
+    try {
+      const res = await fetch("http://localhost:4000/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: SignupForm.convertData(),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        setAlertClass({ status: "success", text: data.message });
+      } else {
+        setAlertClass({ status: "error", text: data.message });
+      }
+    } catch (error) {
+      setAlertClass({ status: "error", text: error.message });
+    }
+  };
+
   const handleSubmit = () => {
     // дублирующая проверка перед отправкой
     SignupForm.validateAll();
@@ -49,10 +71,18 @@ export default function Component() {
         }
       });
     } else {
+      setAlertClass({ status: "progress", text: "Loading..." });
+
       console.log("Result:", SignupForm.value);
-      // SignupForm.submit();
+
+      submit();
     }
   };
+
+  const [alertClass, setAlertClass] = useState({
+    status: "disabled",
+    text: "",
+  });
 
   const [isDisabled, setIsDisabled] = useState(true);
 
@@ -167,9 +197,7 @@ export default function Component() {
         text={"Continue"}
       />
 
-      {isDisabled && <Alert className={"success"} message="error" />}
-
-      <p>password confirm</p>
+      <Alert className={alertClass.status} alertText={alertClass.text} />
     </Form>
   );
 }

@@ -22,8 +22,8 @@ export class SignupForm {
     PASSWORD_CONFIRM: "Ваш второй пароль не совпадает с первым.",
   };
 
-  static error = {};
-  static value = {};
+  static error = {}; // объект с ошибками
+  static value = {}; // объект со значениями
 
   static validate = (name, value) => {
     if (String(value).length < 1) {
@@ -83,9 +83,11 @@ export class SignupForm {
     }
   };
 
-  static submit = () => {
-    //отправка на сервер - нажатие кнопки
-    alert();
+  static convertData = () => {
+    return JSON.stringify({
+      [this.FIELD_NAME.EMAIL]: this.value[this.FIELD_NAME.EMAIL],
+      [this.FIELD_NAME.PASSWORD]: this.value[this.FIELD_NAME.PASSWORD],
+    });
   };
 }
 
