@@ -1,3 +1,4 @@
+// изменить стили поля на error и сообщить об ошибке
 export function setError(tempClass, key, stateFunction, refName) {
   if (tempClass.error.hasOwnProperty(key)) {
     stateFunction(true);

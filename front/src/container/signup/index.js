@@ -12,13 +12,61 @@ import InputPassword from "../../component/input-password";
 
 export default function Component() {
   const handleSubmit = () => {
-    console.log("Result:", SignupForm.value);
-    SignupForm.submit();
+    // дублирующая проверка перед отправкой
+    SignupForm.validateAll();
+
+    if (Object.keys(SignupForm.error).length !== 0) {
+      console.log("Error:", SignupForm.error);
+
+      setIsDisabled(true);
+
+      Object.entries(SignupForm.error).forEach(([name, value]) => {
+        if (name === SignupForm.FIELD_NAME.EMAIL) {
+          setError(
+            SignupForm,
+            SignupForm.FIELD_NAME.EMAIL,
+            setEmailError,
+            emailSpan
+          );
+        }
+
+        if (name === SignupForm.FIELD_NAME.PASSWORD) {
+          setError(
+            SignupForm,
+            SignupForm.FIELD_NAME.PASSWORD,
+            setPasswordError,
+            passwordSpan
+          );
+        }
+
+        if (name === SignupForm.FIELD_NAME.PASSWORD_CONFIRM) {
+          setError(
+            SignupForm,
+            SignupForm.FIELD_NAME.PASSWORD_CONFIRM,
+            setPasswordConfirmError,
+            passwordConfirmSpan
+          );
+        }
+      });
+    } else {
+      console.log("Result:", SignupForm.value);
+      // SignupForm.submit();
+    }
   };
 
   const [isDisabled, setIsDisabled] = useState(true);
-  const handleIsDisabled = () => {
-    setIsDisabled(!isDisabled);
+
+  const checkDisabled = () => {
+    if (
+      Object.keys(SignupForm.error).length === 0 &&
+      email !== "" &&
+      password !== "" &&
+      passwordConfirm !== ""
+    ) {
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
+    }
   };
 
   const emailSpan = useRef(null);
@@ -26,11 +74,13 @@ export default function Component() {
   const [email, setEmail] = useState("");
 
   const handleEmailChange = (value) => {
-    SignupForm.change("email", value);
+    SignupForm.change(SignupForm.FIELD_NAME.EMAIL, value);
 
-    setError(SignupForm, "email", setEmailError, emailSpan);
+    setError(SignupForm, SignupForm.FIELD_NAME.EMAIL, setEmailError, emailSpan);
 
     setEmail(value);
+
+    checkDisabled();
   };
 
   const passwordSpan = useRef(null);
@@ -38,11 +88,18 @@ export default function Component() {
   const [password, setPassword] = useState("");
 
   const handlePasswordChange = (value) => {
-    SignupForm.change("password", value);
+    SignupForm.change(SignupForm.FIELD_NAME.PASSWORD, value);
 
-    setError(SignupForm, "password", setPasswordError, passwordSpan);
+    setError(
+      SignupForm,
+      SignupForm.FIELD_NAME.PASSWORD,
+      setPasswordError,
+      passwordSpan
+    );
 
     setPassword(value);
+
+    checkDisabled();
   };
 
   const passwordConfirmSpan = useRef(null);
@@ -50,16 +107,18 @@ export default function Component() {
   const [passwordConfirm, setPasswordConfirm] = useState("");
 
   const handlePasswordConfirmChange = (value) => {
-    SignupForm.change("passwordConfirm", value);
+    SignupForm.change(SignupForm.FIELD_NAME.PASSWORD_CONFIRM, value);
 
     setError(
       SignupForm,
-      "passwordConfirm",
+      SignupForm.FIELD_NAME.PASSWORD_CONFIRM,
       setPasswordConfirmError,
       passwordConfirmSpan
     );
 
     setPasswordConfirm(value);
+
+    checkDisabled();
   };
 
   return (
@@ -110,7 +169,7 @@ export default function Component() {
 
       {isDisabled && <Alert className={"success"} message="error" />}
 
-      <p onClick={handleIsDisabled}>is Disabled</p>
+      <p>password confirm</p>
     </Form>
   );
 }

@@ -6,6 +6,12 @@ const REG_EXP_PASSWORD = new RegExp(
 
 // в этом объекте будут все данные одного пользователя
 export class SignupForm {
+  static FIELD_NAME = {
+    EMAIL: "email",
+    PASSWORD: "password",
+    PASSWORD_CONFIRM: "passwordConfirm",
+  };
+
   // тут - заготовленные тексты на случай ошибок при валидации
   static FIELD_ERROR = {
     IS_EMPTY: "Введите значение в поле",
@@ -28,19 +34,19 @@ export class SignupForm {
       return this.FIELD_ERROR.IS_BIG;
     }
 
-    if (name === "email") {
+    if (name === this.FIELD_NAME.EMAIL) {
       if (!REG_EXP_EMAIL.test(String(value))) {
         return this.FIELD_ERROR.EMAIL;
       }
     }
 
-    if (name === "password") {
+    if (name === this.FIELD_NAME.PASSWORD) {
       if (!REG_EXP_PASSWORD.test(String(value))) {
         return this.FIELD_ERROR.PASSWORD;
       }
     }
 
-    if (name === "passwordConfirm") {
+    if (name === this.FIELD_NAME.PASSWORD_CONFIRM) {
       if (String(value) !== this.value["password"]) {
         return this.FIELD_ERROR.PASSWORD_CONFIRM;
       }
@@ -59,6 +65,22 @@ export class SignupForm {
 
     console.log(this.error);
     console.log(this.value);
+  };
+
+  static validateAll = () => {
+    Object.entries(this.value).forEach(([name, value]) => {
+      const error = this.validate(name, value);
+
+      if (error) {
+        this.error[name] = error;
+      } else {
+        delete this.error[name];
+      }
+    });
+
+    if (this.value.password !== this.value.passwordConfirm) {
+      this.error["passwordConfirm"] = this.FIELD_ERROR.PASSWORD_CONFIRM;
+    }
   };
 
   static submit = () => {
