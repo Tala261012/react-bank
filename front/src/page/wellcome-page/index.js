@@ -16,11 +16,13 @@ export default function Component() {
 
       <div className="button-block">
         <Button
+          isDisabled={false}
           onClick={handleSignup}
           text={"Sign Up"}
           className={"button-main"}
         />
         <Button
+          isDisabled={false}
           onClick={handleSignin}
           text={"Sign In"}
           className={"button-purple"}

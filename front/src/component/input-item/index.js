@@ -4,6 +4,7 @@ import "./index.css";
 import { useState } from "react";
 
 export default function Component({
+  name = "",
   label = "",
   type = "text",
   placeholder = "",
@@ -32,6 +33,7 @@ export default function Component({
         className={
           isError ? `field__input field__input--error` : "field__input"
         }
+        name={name}
         type={type}
         placeholder={placeholder}
         onChange={handleChange}

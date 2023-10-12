@@ -10,6 +10,9 @@ const router = express.Router()
 // router.use('/', test)
 // Використовуйте інші файли роутів, якщо є
 
+const user = require('./user')
+router.use('/', user)
+
 router.get('/', (req, res) => {
   res.status(200).json('Hello World')
 })

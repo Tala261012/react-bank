@@ -38,7 +38,7 @@ export default function Component() {
     SignupForm.validateAll();
 
     if (Object.keys(SignupForm.error).length !== 0) {
-      console.log("Error:", SignupForm.error);
+      // console.log("Error:", SignupForm.error);
 
       setIsDisabled(true);
 
@@ -156,6 +156,7 @@ export default function Component() {
       <div>
         <InputItem
           isError={emailError}
+          name={"email"}
           type={"email"}
           label={"Email:"}
           placeholder={"Enter your email"}
@@ -169,6 +170,7 @@ export default function Component() {
       <div>
         <InputPassword
           isError={passwordError}
+          name={"password"}
           label={"Password:"}
           placeholder={"Create your passowrd"}
           onChange={handlePasswordChange}
@@ -181,6 +183,7 @@ export default function Component() {
       <div>
         <InputPassword
           isError={passwordConfirmError}
+          name={"passwordconfirm"}
           label={"Confirm password:"}
           placeholder={"Write your passowrd again"}
           onChange={handlePasswordConfirmChange}
