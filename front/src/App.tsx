@@ -20,7 +20,10 @@ function App() {
           <Route path="/signup-confirm" element={<SignupConfirmPage />} />
           <Route path="/signin" element={<SigninPage />} />
           <Route path="/recovery" element={<RecoveryPage />} />
-          <Route path="/recovery-confirm" element={<RecoveryConfirmPage />} />
+          <Route
+            path="/recovery-confirm/:emailRecoveryConfirm"
+            element={<RecoveryConfirmPage />}
+          />
           <Route path="*" element={<ErrorPage />} />
         </Routes>
       </BrowserRouter>

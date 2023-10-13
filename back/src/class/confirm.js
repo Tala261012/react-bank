@@ -22,17 +22,6 @@ class Confirm {
     return Math.trunc(Math.random() * 9000) + 1000
   }
 
-  static checkCode = (email, code) => {
-    // сравниваем код с почтой
-    const elemByCode = this.getByCode(code)
-
-    if (elemByCode) {
-      if (elemByCode.email === email) {
-        return true //код сооветствует почте
-      } else return false
-    } else return false
-  }
-
   static getByCode = (code) => {
     return (
       this.#list.find((elem) => elem.code === code) || null

@@ -63,7 +63,7 @@ router.post('/recovery', function (req, res) {
   try {
     const { email } = req.body
 
-    console.log(email)
+    // console.log(email)
 
     if (!email) {
       return res.status(400).json({
@@ -73,7 +73,7 @@ router.post('/recovery', function (req, res) {
     }
 
     const user = User.getByEmail(email)
-    console.log(user)
+    // console.log(user)
 
     if (!user) {
       return res.status(400).json({
@@ -88,12 +88,62 @@ router.post('/recovery', function (req, res) {
     console.log(confirm)
 
     return res.status(200).json({
-      message: `Код для восстановления пароля успешно отправлен на email. (${confirm.code})`,
+      message: `Код для восстановления пароля успешно отправлен на email.`,
+      code: confirm.code,
     })
   } catch (error) {
     return res
       .status(400)
       .json({ message: 'Ошибка отправки кода.' })
+  }
+})
+
+// ==================================================
+
+router.post('/recovery-confirm', function (req, res) {
+  const { password, code, email } = req.body
+
+  console.log(password, code, email)
+
+  if (!password || !code || !email) {
+    return res.status(400).json({
+      message: 'Ошибка. Обязательные поля отсутствуют.',
+    })
+  }
+
+  try {
+    const elemByCode = Confirm.getByCode(Number(code))
+
+    if (!elemByCode) {
+      return res
+        .status(400)
+        .json({ message: 'Такого кода нет.' })
+    }
+
+    if (elemByCode.email !== String(email)) {
+      return res
+        .status(400)
+        .json({ message: 'Код не сoооветствует.' })
+    }
+
+    const user = User.getByEmail(email)
+
+    if (!user) {
+      return res.status(400).json({
+        message:
+          'Пользователь с таким email не зарегистрирован.',
+      })
+    }
+
+    user.password = password
+
+    console.log(user)
+
+    return res.status(200).json({
+      message: 'Пароль изменен.',
+    })
+  } catch (error) {
+    return res.status(400).json({ message: error.message })
   }
 })
 

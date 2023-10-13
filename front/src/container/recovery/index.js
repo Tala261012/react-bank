@@ -1,4 +1,3 @@
-// Войти
 import "./index.css";
 import { RecoveryForm } from "../../utils/form";
 import { setError } from "../../utils/scripts";
@@ -8,8 +7,11 @@ import Button from "../../component/button";
 import Form from "../../component/form";
 import Alert from "../../component/alert";
 import InputItem from "../../component/input-item";
+import { useNavigate } from "react-router-dom";
 
 export default function Component() {
+  const navigate = useNavigate();
+
   const submit = async () => {
     try {
       const res = await fetch("http://localhost:4000/recovery", {
@@ -24,6 +26,8 @@ export default function Component() {
 
       if (res.ok) {
         setAlertClass({ status: "success", text: data.message });
+        alert(data.code);
+        navigate(`/recovery-confirm/${email}`);
       } else {
         setAlertClass({ status: "error", text: data.message });
       }
