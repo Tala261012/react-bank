@@ -8,15 +8,15 @@ export default function Component({
   label = "",
   placeholder = "",
   isError = false,
-  onChange,
+  onInput,
 }) {
   const [inputValue, setInputValue] = useState("");
 
-  const handleChange = (event) => {
+  const handleInput = (event) => {
     const newValue = event.target.value;
     setInputValue(newValue);
 
-    if (onChange) onChange(newValue);
+    if (onInput) onInput(newValue);
   };
 
   const fieldSpan = useRef(null);
@@ -55,7 +55,7 @@ export default function Component({
           name={name}
           type={fieldPass.type}
           placeholder={placeholder}
-          onChange={handleChange}
+          onInput={handleInput}
         />
         <span
           onClick={handleClick}

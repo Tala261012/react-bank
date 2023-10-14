@@ -101,7 +101,7 @@ export default function Component() {
   const [codeError, setCodeError] = useState(false);
   const [code, setCode] = useState("");
 
-  const handleCodeChange = (value) => {
+  const handleCodeInput = (value) => {
     RecoveryConfirmForm.change(RecoveryConfirmForm.FIELD_NAME.CODE, value);
 
     setError(
@@ -120,7 +120,7 @@ export default function Component() {
   const [passwordError, setPasswordError] = useState(false);
   const [password, setPassword] = useState("");
 
-  const handlePasswordChange = (value) => {
+  const handlePasswordInput = (value) => {
     RecoveryConfirmForm.change(RecoveryConfirmForm.FIELD_NAME.PASSWORD, value);
 
     setError(
@@ -139,7 +139,7 @@ export default function Component() {
   const [passwordConfirmError, setPasswordConfirmError] = useState(false);
   const [passwordConfirm, setPasswordConfirm] = useState("");
 
-  const handlePasswordConfirmChange = (value) => {
+  const handlePasswordConfirmInput = (value) => {
     RecoveryConfirmForm.change(
       RecoveryConfirmForm.FIELD_NAME.PASSWORD_CONFIRM,
       value
@@ -166,7 +166,7 @@ export default function Component() {
           type={"number"}
           label={"Code:"}
           placeholder={"Enter code from your email"}
-          onChange={handleCodeChange}
+          onInput={handleCodeInput}
         />
         <span ref={codeSpan} className="form__error">
           Error
@@ -179,7 +179,7 @@ export default function Component() {
           name={"password"}
           label={"New password:"}
           placeholder={"Create your passowrd"}
-          onChange={handlePasswordChange}
+          onInput={handlePasswordInput}
         />
         <span ref={passwordSpan} className="form__error">
           Error
@@ -192,7 +192,7 @@ export default function Component() {
           name={"passwordconfirm"}
           label={"Confirm new password:"}
           placeholder={"Write your passowrd again"}
-          onChange={handlePasswordConfirmChange}
+          onInput={handlePasswordConfirmInput}
         />
         <span ref={passwordConfirmSpan} className="form__error">
           Error

@@ -11,7 +11,10 @@ const router = express.Router()
 // Використовуйте інші файли роутів, якщо є
 
 const user = require('./user')
+const balance = require('./balance')
+
 router.use('/', user)
+router.use('/', balance)
 
 router.get('/', (req, res) => {
   res.status(200).json('Hello World')

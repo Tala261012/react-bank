@@ -2,6 +2,7 @@
 import "./index.css";
 import { SignupForm } from "../../utils/form";
 import { setError } from "../../utils/scripts";
+import { saveSession } from "../../utils/session";
 
 import { useState, useRef } from "react";
 import Button from "../../component/button";
@@ -9,8 +10,11 @@ import Form from "../../component/form";
 import Alert from "../../component/alert";
 import InputItem from "../../component/input-item";
 import InputPassword from "../../component/input-password";
+import { useNavigate } from "react-router-dom";
 
 export default function Component() {
+  const navigate = useNavigate();
+
   const submit = async () => {
     try {
       const res = await fetch("http://localhost:4000/signup", {
@@ -25,6 +29,9 @@ export default function Component() {
 
       if (res.ok) {
         setAlertClass({ status: "success", text: data.message });
+        saveSession(data.session);
+        alert(data.code);
+        navigate(`/signup-confirm`);
       } else {
         setAlertClass({ status: "error", text: data.message });
       }
@@ -103,7 +110,7 @@ export default function Component() {
   const [emailError, setEmailError] = useState(false);
   const [email, setEmail] = useState("");
 
-  const handleEmailChange = (value) => {
+  const handleEmailInput = (value) => {
     SignupForm.change(SignupForm.FIELD_NAME.EMAIL, value);
 
     setError(SignupForm, SignupForm.FIELD_NAME.EMAIL, setEmailError, emailSpan);
@@ -117,7 +124,7 @@ export default function Component() {
   const [passwordError, setPasswordError] = useState(false);
   const [password, setPassword] = useState("");
 
-  const handlePasswordChange = (value) => {
+  const handlePasswordInput = (value) => {
     SignupForm.change(SignupForm.FIELD_NAME.PASSWORD, value);
 
     setError(
@@ -136,7 +143,7 @@ export default function Component() {
   const [passwordConfirmError, setPasswordConfirmError] = useState(false);
   const [passwordConfirm, setPasswordConfirm] = useState("");
 
-  const handlePasswordConfirmChange = (value) => {
+  const handlePasswordConfirmInput = (value) => {
     SignupForm.change(SignupForm.FIELD_NAME.PASSWORD_CONFIRM, value);
 
     setError(
@@ -160,7 +167,7 @@ export default function Component() {
           type={"email"}
           label={"Email:"}
           placeholder={"Enter your email"}
-          onChange={handleEmailChange}
+          onInput={handleEmailInput}
         />
         <span ref={emailSpan} className="form__error">
           Error
@@ -173,7 +180,7 @@ export default function Component() {
           name={"password"}
           label={"Password:"}
           placeholder={"Create your passowrd"}
-          onChange={handlePasswordChange}
+          onInput={handlePasswordInput}
         />
         <span ref={passwordSpan} className="form__error">
           Error
@@ -186,7 +193,7 @@ export default function Component() {
           name={"passwordconfirm"}
           label={"Confirm password:"}
           placeholder={"Write your passowrd again"}
-          onChange={handlePasswordConfirmChange}
+          onInput={handlePasswordConfirmInput}
         />
         <span ref={passwordConfirmSpan} className="form__error">
           Error

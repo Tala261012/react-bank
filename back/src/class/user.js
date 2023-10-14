@@ -8,6 +8,7 @@ class User {
     this.id = User.#count++
     this.email = String(email).toLowerCase()
     this.password = password
+    this.isConfirm = false
   }
 
   static create(email, password) {

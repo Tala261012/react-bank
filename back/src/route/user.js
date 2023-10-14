@@ -1,12 +1,13 @@
 const express = require('express')
 const router = express.Router()
 
-// ==================================================
+// ========================================================================
 
 const { User } = require('../class/user')
 const { Confirm } = require('../class/confirm')
+const { Session } = require('../class/session')
 
-// ==================================================
+// ========================================================================
 
 router.post('/signup', function (req, res) {
   try {
@@ -29,13 +30,24 @@ router.post('/signup', function (req, res) {
       })
     }
 
-    User.create(email, password)
+    const newUser = User.create(email, password)
 
-    // console.log(user)
+    console.log(newUser)
 
-    return res
-      .status(200)
-      .json({ message: 'Пользователь успешно создан' })
+    const session = Session.create(newUser)
+
+    const confirm = Confirm.create(newUser.email)
+
+    console.log(confirm.code)
+
+    //confirm email
+
+    return res.status(200).json({
+      message:
+        'Пользователь успешно создан. На Вашу почту выслан код для подтверждения аккаунта.',
+      session,
+      code: confirm.code,
+    })
   } catch (error) {
     return res
       .status(400)
@@ -43,21 +55,21 @@ router.post('/signup', function (req, res) {
   }
 })
 
-// ==================================================
+// ========================================================================
 
 router.get('/signup', function (req, res) {
   const list = User.getList()
   return res.status(200).json(list)
 })
 
-// ==================================================
+// ========================================================================
 
 router.get('/recovery', function (req, res) {
   const list = Confirm.getList()
   return res.status(200).json(list)
 })
 
-// ==================================================
+// ========================================================================
 
 router.post('/recovery', function (req, res) {
   try {
@@ -98,7 +110,7 @@ router.post('/recovery', function (req, res) {
   }
 })
 
-// ==================================================
+// ========================================================================
 
 router.post('/recovery-confirm', function (req, res) {
   const { password, code, email } = req.body
@@ -137,6 +149,8 @@ router.post('/recovery-confirm', function (req, res) {
 
     user.password = password
 
+    Confirm.deleteByCode(code)
+
     console.log(user)
 
     return res.status(200).json({
@@ -146,5 +160,7 @@ router.post('/recovery-confirm', function (req, res) {
     return res.status(400).json({ message: error.message })
   }
 })
+
+// ========================================================================
 
 module.exports = router

@@ -81,7 +81,7 @@ export default function Component() {
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState(false);
 
-  const handleEmailChange = (value) => {
+  const handleEmailInput = (value) => {
     RecoveryForm.change(RecoveryForm.FIELD_NAME.EMAIL, value);
 
     setError(
@@ -105,7 +105,7 @@ export default function Component() {
           type={"email"}
           label={"Email:"}
           placeholder={"Enter your email"}
-          onChange={handleEmailChange}
+          onInput={handleEmailInput}
         />
         <span ref={emailSpan} className="form__error">
           Error

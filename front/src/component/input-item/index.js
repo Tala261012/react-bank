@@ -9,15 +9,15 @@ export default function Component({
   type = "text",
   placeholder = "",
   isError = false,
-  onChange,
+  onInput,
 }) {
   const [inputValue, setInputValue] = useState("");
 
-  const handleChange = (event) => {
+  const handleInput = (event) => {
     const newValue = event.target.value;
     setInputValue(newValue);
 
-    if (onChange) onChange(newValue);
+    if (onInput) onInput(newValue);
   };
 
   return (
@@ -36,7 +36,7 @@ export default function Component({
         name={name}
         type={type}
         placeholder={placeholder}
-        onChange={handleChange}
+        onInput={handleInput}
       />
     </div>
   );
