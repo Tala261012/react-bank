@@ -11,12 +11,7 @@ import RecoveryConfirmPage from "./page/recovery-confirm-page";
 import SignupConfirmPage from "./page/signup-confirm-page";
 import BalancePage from "./page/balance-page";
 
-// type State = {
-//   user: { id: number; email: string; password: string };
-//   token: string;
-// };
-
-const AuthContext = createContext({});
+export const AuthContext = createContext({});
 
 function initSession(session) {
   session = loadSession(session);
@@ -27,7 +22,6 @@ function initSession(session) {
   }
 }
 
-// function reducer() {}
 function reducer(state, action) {
   switch (action.type) {
     case "login":
@@ -114,7 +108,7 @@ function App() {
             />
 
             <Route
-              path="/signup-confirm"
+              path="/signup-confirm/:emailConfirm"
               element={
                 <PrivateRoute>
                   <SignupConfirmPage />

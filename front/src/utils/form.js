@@ -238,4 +238,67 @@ export class RecoveryConfirmForm {
   };
 }
 
+// ======================================================================================
+
+// смена пароля по коду
+export class EmailConfirmForm {
+  static FIELD_NAME = {
+    EMAIL: "email",
+    CODE: "code",
+  };
+
+  // тут - заготовленные тексты на случай ошибок при валидации
+  static FIELD_ERROR = {
+    IS_EMPTY: "Введите значение в поле",
+    IS_BIG: "Слишком длинное значение, уберите лишнее",
+  };
+
+  static error = {}; // объект с ошибками
+  static value = {}; // объект со значениями
+
+  static validate = (name, value) => {
+    if (String(value).length < 1) {
+      return this.FIELD_ERROR.IS_EMPTY;
+    }
+
+    if (String(value).length > 30) {
+      return this.FIELD_ERROR.IS_BIG;
+    }
+  };
+
+  static change = (name, value) => {
+    const error = this.validate(name, value);
+    this.value[name] = value;
+
+    if (error) {
+      this.error[name] = error;
+    } else {
+      delete this.error[name];
+    }
+  };
+
+  static validateAll = () => {
+    Object.entries(this.value).forEach(([name, value]) => {
+      const error = this.validate(name, value);
+
+      if (error) {
+        this.error[name] = error;
+      } else {
+        delete this.error[name];
+      }
+    });
+  };
+
+  static setEmail = (email) => {
+    this.value.email = String(email).toLowerCase();
+  };
+
+  static convertData = () => {
+    return JSON.stringify({
+      [this.FIELD_NAME.EMAIL]: this.value[this.FIELD_NAME.EMAIL],
+      [this.FIELD_NAME.CODE]: Number(this.value[this.FIELD_NAME.CODE]),
+    });
+  };
+}
+
 // module.exports = { SignupForm };

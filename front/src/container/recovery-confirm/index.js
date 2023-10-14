@@ -9,9 +9,11 @@ import Form from "../../component/form";
 import Alert from "../../component/alert";
 import InputItem from "../../component/input-item";
 import InputPassword from "../../component/input-password";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 export default function Component() {
+  const navigate = useNavigate();
+
   const { emailRecoveryConfirm } = useParams();
 
   useEffect(() => {
@@ -32,6 +34,7 @@ export default function Component() {
 
       if (res.ok) {
         setAlertClass({ status: "success", text: data.message });
+        navigate(`/balance`);
       } else {
         setAlertClass({ status: "error", text: data.message });
       }

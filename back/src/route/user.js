@@ -163,4 +163,66 @@ router.post('/recovery-confirm', function (req, res) {
 
 // ========================================================================
 
+router.post('/signup-confirm', function (req, res) {
+  const { code, email } = req.body
+
+  console.log(code, email)
+
+  if (!code || !email) {
+    return res.status(400).json({
+      message: 'Ошибка. Обязательные поля отсутствуют.',
+    })
+  }
+
+  try {
+    const elemByCode = Confirm.getByCode(Number(code))
+
+    if (!elemByCode) {
+      return res
+        .status(400)
+        .json({ message: 'Такого кода нет.' })
+    }
+
+    console.log(elemByCode)
+
+    if (elemByCode.email !== String(email)) {
+      return res
+        .status(400)
+        .json({ message: 'Код не сoооветствует.' })
+    }
+
+    const user = User.getByEmail(email)
+
+    if (!user) {
+      return res.status(400).json({
+        message:
+          'Пользователь с таким email не зарегистрирован.',
+      })
+    }
+
+    user.isConfirm = true
+
+    Confirm.deleteByCode(code)
+
+    const session = Session.getByEmail(email)
+
+    if (!session) {
+      return res.status(400).json({
+        message: 'Ошибка сессии.',
+      })
+    }
+
+    session.user = user
+
+    console.log(session)
+
+    return res.status(200).json({
+      message: 'Почта подтверждена.',
+      session,
+    })
+  } catch (error) {
+    return res.status(400).json({ message: error.message })
+  }
+})
+
 module.exports = router

@@ -2,9 +2,10 @@
 import "./index.css";
 import { SignupForm } from "../../utils/form";
 import { setError } from "../../utils/scripts";
-import { saveSession } from "../../utils/session";
+// import { saveSession } from "../../utils/session";
+import { AuthContext } from "../../App";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useContext } from "react";
 import Button from "../../component/button";
 import Form from "../../component/form";
 import Alert from "../../component/alert";
@@ -14,6 +15,9 @@ import { useNavigate } from "react-router-dom";
 
 export default function Component() {
   const navigate = useNavigate();
+  const auth = useContext(AuthContext);
+
+  // console.log("auth inside Signup:", auth);
 
   const submit = async () => {
     try {
@@ -29,9 +33,10 @@ export default function Component() {
 
       if (res.ok) {
         setAlertClass({ status: "success", text: data.message });
-        saveSession(data.session);
+        // saveSession(data.session);
+        auth.dispatch({ type: "login", data: data.session });
         alert(data.code);
-        navigate(`/signup-confirm`);
+        navigate(`/signup-confirm/${email}`);
       } else {
         setAlertClass({ status: "error", text: data.message });
       }
@@ -80,7 +85,7 @@ export default function Component() {
     } else {
       setAlertClass({ status: "progress", text: "Loading..." });
 
-      console.log("Result:", SignupForm.value);
+      // console.log("Result:", SignupForm.value);
 
       submit();
     }

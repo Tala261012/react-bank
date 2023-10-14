@@ -1,43 +1,126 @@
-// Войти
+// подтверждение почты после регистрации
 import "./index.css";
-import { useState } from "react";
+import { EmailConfirmForm } from "../../utils/form";
+import { setError } from "../../utils/scripts";
+import { AuthContext } from "../../App";
+
+import { useState, useRef, useEffect, useContext } from "react";
 import Button from "../../component/button";
 import Form from "../../component/form";
 import Alert from "../../component/alert";
 import InputItem from "../../component/input-item";
+import { useParams, useNavigate } from "react-router-dom";
 
 export default function Component() {
-  const handleSubmit = () => {
-    alert(code);
+  const navigate = useNavigate();
+  const auth = useContext(AuthContext);
+
+  const { emailConfirm } = useParams();
+
+  useEffect(() => {
+    EmailConfirmForm.setEmail(emailConfirm);
+  }, []);
+
+  const submit = async () => {
+    try {
+      const res = await fetch("http://localhost:4000/signup-confirm", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: EmailConfirmForm.convertData(),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        setAlertClass({ status: "success", text: data.message });
+        auth.dispatch({ type: "login", data: data.session });
+
+        navigate(`/balance`);
+      } else {
+        setAlertClass({ status: "error", text: data.message });
+      }
+    } catch (error) {
+      setAlertClass({ status: "error", text: error.message });
+    }
   };
 
+  const handleSubmit = () => {
+    // дублирующая проверка перед отправкой
+    EmailConfirmForm.validateAll();
+
+    if (Object.keys(EmailConfirmForm.error).length !== 0) {
+      // console.log("Error:", SignupForm.error);
+
+      setIsDisabled(true);
+    } else {
+      setAlertClass({ status: "progress", text: "Loading..." });
+
+      // console.log("Result:", EmailConfirmForm.value);
+
+      submit();
+    }
+  };
+
+  const [alertClass, setAlertClass] = useState({
+    status: "disabled",
+    text: "",
+  });
+
+  const [isDisabled, setIsDisabled] = useState(true);
+
+  const checkDisabled = () => {
+    if (Object.keys(EmailConfirmForm.error).length === 0 && code !== "") {
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
+    }
+  };
+
+  const codeSpan = useRef(null);
+  const [codeError, setCodeError] = useState(false);
   const [code, setCode] = useState("");
 
-  const handleEmailChange = (value) => {
+  const handleCodeInput = (value) => {
+    EmailConfirmForm.change(EmailConfirmForm.FIELD_NAME.CODE, value);
+
+    setError(
+      EmailConfirmForm,
+      EmailConfirmForm.FIELD_NAME.CODE,
+      setCodeError,
+      codeSpan
+    );
+
     setCode(value);
+
+    checkDisabled();
   };
 
   return (
     <Form>
       <div>
         <InputItem
-          type={"text"}
+          isError={codeError}
+          name={"code"}
+          type={"number"}
           label={"Code:"}
-          placeholder={"Your code"}
-          onChange={handleEmailChange}
+          placeholder={"Enter code from your email"}
+          onInput={handleCodeInput}
         />
-        <span name="code" className="form__error">
+        <span ref={codeSpan} className="form__error">
           Error
         </span>
       </div>
 
       <Button
-        // isDisabled={isDisabled}
+        isDisabled={isDisabled}
         onClick={handleSubmit}
         className={"button-main"}
         text={"Confirm"}
       />
-      <Alert className={"success"} message="This user already exists" />
+
+      <Alert className={alertClass.status} alertText={alertClass.text} />
     </Form>
   );
 }

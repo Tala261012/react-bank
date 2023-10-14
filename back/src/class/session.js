@@ -34,8 +34,17 @@ class Session {
     return result
   }
 
+  static getByEmail = (email) => {
+    // возвращает весь объект {token, user}
+    return (
+      this.#list.find(
+        (elem) => elem.user.email === email,
+      ) || null
+    )
+  }
+
   static getByToken = (token) => {
-    // возвращает весь объект {user, token}
+    // возвращает весь объект {token, user}
     return (
       this.#list.find((elem) => elem.token === token) ||
       null
