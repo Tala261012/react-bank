@@ -214,7 +214,7 @@ router.post('/signup-confirm', function (req, res) {
 
     session.user = user
 
-    console.log(session)
+    // console.log(session)
 
     return res.status(200).json({
       message: 'Почта подтверждена.',
