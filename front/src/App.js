@@ -108,7 +108,7 @@ function App() {
             />
 
             <Route
-              path="/signup-confirm/:emailConfirm"
+              path="/signup-confirm"
               element={
                 <PrivateRoute>
                   <SignupConfirmPage />

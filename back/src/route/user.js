@@ -163,6 +163,68 @@ router.post('/recovery-confirm', function (req, res) {
 
 // ========================================================================
 
+router.get('/recovery-confirm', function (req, res) {
+  const { renew, email } = req.query
+
+  // console.log('server', renew, email)
+
+  if (!email) {
+    return res.status(400).json({
+      message: 'Ошибка. Обязательные поля отсутствуют.',
+    })
+  }
+
+  try {
+    if (renew) {
+      Confirm.deleteByEmail(email)
+
+      const confirm = Confirm.create(email)
+
+      console.log(confirm.code)
+
+      return res.status(200).json({
+        message: 'Код выслан повторно.',
+        code: confirm.code,
+      })
+    }
+  } catch (error) {
+    return res.status(400).json({ message: error.message })
+  }
+})
+
+// ========================================================================
+
+router.get('/signup-confirm', function (req, res) {
+  const { renew, email } = req.query
+
+  // console.log('server', renew, email)
+
+  if (!email) {
+    return res.status(400).json({
+      message: 'Ошибка. Обязательные поля отсутствуют.',
+    })
+  }
+
+  try {
+    if (renew) {
+      Confirm.deleteByEmail(email)
+
+      const confirm = Confirm.create(email)
+
+      console.log(confirm.code)
+
+      return res.status(200).json({
+        message: 'Код выслан повторно.',
+        code: confirm.code,
+      })
+    }
+  } catch (error) {
+    return res.status(400).json({ message: error.message })
+  }
+})
+
+// ========================================================================
+
 router.post('/signup-confirm', function (req, res) {
   const { code, email } = req.body
 
@@ -224,5 +286,55 @@ router.post('/signup-confirm', function (req, res) {
     return res.status(400).json({ message: error.message })
   }
 })
+
+// ========================================================================
+
+router.post('/signin', function (req, res) {
+  const { email, password } = req.body
+
+  // console.log(email, password)
+
+  if (!email || !password) {
+    return res.status(400).json({
+      message:
+        'Ошибка! Не все обязательные поля заполнены.',
+    })
+  }
+
+  try {
+    const user = User.getByEmail(email)
+
+    if (!user) {
+      return res.status(400).json({
+        message: `Пользователь с таким email (${email}) не зарегистрирован.`,
+      })
+    }
+
+    if (user.password !== password) {
+      return res.status(400).json({
+        message: `Неверный пароль.`,
+      })
+    }
+
+    const session = Session.getByEmail(email)
+
+    if (!session) {
+      return res.status(400).json({
+        message: 'Ошибка сессии.',
+      })
+    }
+
+    return res.status(200).json({
+      message: 'Вход разрешен.',
+      session,
+    })
+  } catch (error) {
+    return res
+      .status(400)
+      .json({ message: 'Ошибка входа в аккаунт.' })
+  }
+})
+
+// ========================================================================
 
 module.exports = router

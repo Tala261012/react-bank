@@ -314,8 +314,6 @@ export class SigninForm {
     IS_EMPTY: "Введите значение в поле",
     IS_BIG: "Слишком длинное значение, уберите лишнее",
     EMAIL: "Введите корректное значение e-mail адреса",
-    PASSWORD:
-      "Пароль должен состоять не менее, чем из 8 символов, включая хотя бы одну цифру, строчную и заглавную букву.",
   };
 
   static error = {}; // объект с ошибками
@@ -333,12 +331,6 @@ export class SigninForm {
     if (name === this.FIELD_NAME.EMAIL) {
       if (!REG_EXP_EMAIL.test(String(value))) {
         return this.FIELD_ERROR.EMAIL;
-      }
-    }
-
-    if (name === this.FIELD_NAME.PASSWORD) {
-      if (!REG_EXP_PASSWORD.test(String(value))) {
-        return this.FIELD_ERROR.PASSWORD;
       }
     }
   };

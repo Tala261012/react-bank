@@ -1,17 +1,18 @@
 // хедер с кнопкой "назад"
 import "./index.css";
+import "../../style/plain-style.css";
+
 import { SignupForm } from "../../utils/form";
 import { setError } from "../../utils/scripts";
-// import { saveSession } from "../../utils/session";
 import { AuthContext } from "../../App";
-
+import { useNavigate, Link } from "react-router-dom";
 import { useState, useRef, useContext } from "react";
+
 import Button from "../../component/button";
 import Form from "../../component/form";
 import Alert from "../../component/alert";
 import InputItem from "../../component/input-item";
 import InputPassword from "../../component/input-password";
-import { useNavigate } from "react-router-dom";
 
 export default function Component() {
   const navigate = useNavigate();
@@ -36,7 +37,7 @@ export default function Component() {
         // saveSession(data.session);
         auth.dispatch({ type: "login", data: data.session });
         alert(data.code);
-        navigate(`/signup-confirm/${email}`);
+        navigate(`/signup-confirm`);
       } else {
         setAlertClass({ status: "error", text: data.message });
       }
@@ -203,6 +204,13 @@ export default function Component() {
         <span ref={passwordConfirmSpan} className="form__error">
           Error
         </span>
+      </div>
+
+      <div className="link__prefix">
+        Already have an account?{" "}
+        <Link className="link" to="/signin">
+          Sign In
+        </Link>
       </div>
 
       <Button

@@ -1,13 +1,15 @@
 import "./index.css";
+import "../../style/plain-style.css";
+
 import { RecoveryForm } from "../../utils/form";
 import { setError } from "../../utils/scripts";
-
 import { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+
 import Button from "../../component/button";
 import Form from "../../component/form";
 import Alert from "../../component/alert";
 import InputItem from "../../component/input-item";
-import { useNavigate } from "react-router-dom";
 
 export default function Component() {
   const navigate = useNavigate();

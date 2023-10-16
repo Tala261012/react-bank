@@ -29,6 +29,12 @@ class Confirm {
     )
   }
 
+  static deleteByEmail = (email) => {
+    this.#list = this.#list.filter(
+      (elem) => elem.email !== email,
+    )
+  }
+
   static deleteByCode = (code) => {
     this.#list = this.#list.filter(
       (elem) => elem.code !== code,
