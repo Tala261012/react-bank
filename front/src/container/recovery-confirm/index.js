@@ -1,6 +1,6 @@
 // хедер с кнопкой "назад"
 import "./index.css";
-import "../../style/plain-style.css";
+import "../../style/style.css";
 
 import { RecoveryConfirmForm } from "../../utils/form";
 import { setError } from "../../utils/scripts";
@@ -99,7 +99,7 @@ export default function Component() {
     } else {
       setAlertClass({ status: "progress", text: "Loading..." });
 
-      console.log("Result:", RecoveryConfirmForm.value);
+      // console.log("Result:", RecoveryConfirmForm.value);
 
       submit();
     }

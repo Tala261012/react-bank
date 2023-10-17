@@ -1,5 +1,5 @@
 import "./index.css";
-import "../../style/plain-style.css";
+import "../../style/style.css";
 
 import { RecoveryForm } from "../../utils/form";
 import { setError } from "../../utils/scripts";
@@ -58,7 +58,7 @@ export default function Component() {
     } else {
       setAlertClass({ status: "progress", text: "Loading..." });
 
-      console.log("Result:", RecoveryForm.value);
+      // console.log("Result:", RecoveryForm.value);
 
       submit();
     }

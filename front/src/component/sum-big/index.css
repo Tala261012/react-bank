@@ -1,0 +1,29 @@
+.sum__block {
+	display: flex;
+	justify-content: center ;
+	align-items: center;
+	gap: 8px;
+
+	font-size: 32px;
+	letter-spacing: 0.05em;
+}
+	
+.sum__bold {
+	font-weight: 600;
+}
+
+.sum__thin {
+	font-weight: 400;
+}
+
+.sum--white {
+	color: white;
+}
+
+.sum--green {
+	color: #24B277;
+}
+
+.sum--red {
+	color: #F23152;
+}

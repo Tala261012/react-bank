@@ -1,6 +1,6 @@
 // подтверждение почты после регистрации
 import "./index.css";
-import "../../style/plain-style.css";
+import "../../style/style.css";
 
 import { EmailConfirmForm } from "../../utils/form";
 import { setError } from "../../utils/scripts";

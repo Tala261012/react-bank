@@ -2,9 +2,18 @@
 	background-color: #f5f5f7;
 	border-radius: 24px;
 
+	max-width: 393px;
 	width: 393px;
 	min-width: 393px;
 	min-height: 852px;
 
 	position: relative;
+}
+
+.bg-wallet {
+	width: 393px;
+	height: 201px;
+	background-image: url("../../../public/img/wallet-background.png");
+	background-repeat: no-repeat;
+	background-size: contain;
 }

@@ -10,6 +10,10 @@ import RecoveryPage from "./page/recovery-page";
 import RecoveryConfirmPage from "./page/recovery-confirm-page";
 import SignupConfirmPage from "./page/signup-confirm-page";
 import BalancePage from "./page/balance-page";
+import NotificationsPage from "./page/notifications-page";
+import SettingsPage from "./page/settings-page";
+import ReceivePage from "./page/receive-page";
+import SendPage from "./page/send-page";
 
 export const AuthContext = createContext({});
 
@@ -46,7 +50,7 @@ function App() {
     [state]
   );
 
-  console.log("auth", authContextData);
+  // console.log("auth", authContextData);
 
   const AuthRoute = ({ children }) => {
     const auth = useContext(AuthContext);
@@ -76,7 +80,7 @@ function App() {
 
     if (Object.keys(state).length !== 0) {
       if (state.user.isConfirm) {
-        return <BalancePage />;
+        return <>{children}</>;
       } else {
         return <SignupConfirmPage />;
       }
@@ -144,6 +148,38 @@ function App() {
               element={
                 <PrivateRoute>
                   <BalancePage />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/notifications"
+              element={
+                <PrivateRoute>
+                  <NotificationsPage />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/settings"
+              element={
+                <PrivateRoute>
+                  <SettingsPage />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/receive"
+              element={
+                <PrivateRoute>
+                  <ReceivePage />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/send"
+              element={
+                <PrivateRoute>
+                  <SendPage />
                 </PrivateRoute>
               }
             />

@@ -1,4 +1,4 @@
-// отступы между контейнерами
+// отступы между контейнерами 20px
 import "./index.css";
 
 export default function Component({ children }) {

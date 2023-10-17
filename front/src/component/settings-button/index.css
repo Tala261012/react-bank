@@ -1,0 +1,18 @@
+.settings-button {
+	transition-property: opacity;
+	transition-duration: 0.5s;
+	cursor: pointer;
+
+	position: absolute;
+	top: calc(50% - 12px);
+	left: 0;
+}
+
+.settings-button:hover {
+	opacity: 0.8;
+}
+
+.settings-button:active {
+	opacity: 0.2;
+}
+

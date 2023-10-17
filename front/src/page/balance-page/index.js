@@ -3,12 +3,15 @@ import "./index.css";
 import Page from "../../component/page";
 import Grid from "../../component/grid";
 
+import WalletHeader from "../../container/header-wallet";
+import Balance from "../../container/balance";
+
 export default function Component() {
   return (
-    <Page>
+    <Page className="bg-wallet">
       <Grid>
-        <h1>Your balance</h1>
-        <div>To be continued</div>
+        <WalletHeader title={"Main wallet"} />
+        <Balance />
       </Grid>
     </Page>
   );

@@ -1,13 +1,12 @@
 // вход на сайт
 import "./index.css";
-import "../../style/plain-style.css";
+import "../../style/style.css";
 
 import { SigninForm } from "../../utils/form";
 import { setError } from "../../utils/scripts";
 import { AuthContext } from "../../App";
 import { useNavigate, Link } from "react-router-dom";
 import { useState, useRef, useContext } from "react";
-
 import Button from "../../component/button";
 import Form from "../../component/form";
 import Alert from "../../component/alert";

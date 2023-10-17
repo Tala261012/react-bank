@@ -1,4 +1,4 @@
-// отступы между контейнерами
+// отступы между контейнерами 32px от заголовка - к форме
 import "./index.css";
 
 export default function Component({ children }) {

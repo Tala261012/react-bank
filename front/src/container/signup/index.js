@@ -1,6 +1,6 @@
 // хедер с кнопкой "назад"
 import "./index.css";
-import "../../style/plain-style.css";
+import "../../style/style.css";
 
 import { SignupForm } from "../../utils/form";
 import { setError } from "../../utils/scripts";

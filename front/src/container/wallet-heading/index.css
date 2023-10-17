@@ -1,0 +1,12 @@
+.receive-send__block {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 14px;
+}
+
+.wallet-heading {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
