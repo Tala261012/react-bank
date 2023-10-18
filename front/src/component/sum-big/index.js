@@ -5,15 +5,20 @@ export default function Component({
   sign = "$",
   value = "0.00",
   className = "",
+  classSize = "",
 }) {
   const sumArr = String(value).split(".");
 
   return (
     <div className="sum__block">
-      <div className={`sum__bold ${className}`}>{sign}</div>
+      <div className={`sum__bold ${className} ${classSize}`}>{sign}</div>
       <div>
-        <span className={`sum__bold ${className}`}>{sumArr[0]}</span>
-        <span className={`sum__thin ${className}`}>.{sumArr[1]}</span>
+        <span className={`sum__bold ${className} ${classSize}`}>
+          {sumArr[0]}
+        </span>
+        <span className={`sum__thin ${className} ${classSize}`}>
+          .{sumArr[1]}
+        </span>
       </div>
     </div>
   );

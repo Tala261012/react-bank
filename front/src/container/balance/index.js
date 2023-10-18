@@ -3,6 +3,7 @@ import React, { Fragment } from "react";
 import "./index.css";
 
 import Sum from "../../component/sum-big";
+import Line from "../../component/line";
 import WalletHeading from "../wallet-heading";
 
 export default function Component({ children }) {
@@ -10,7 +11,9 @@ export default function Component({ children }) {
 
   return (
     <React.Fragment>
-      <WalletHeading value={temp} sign={"$"} className={"sum--white"} />
+      <WalletHeading value={temp} />
+      <Line />
+      <Sum value={temp} sign={"-$"} />
     </React.Fragment>
   );
 }

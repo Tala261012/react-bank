@@ -2,18 +2,24 @@
 	display: flex;
 	justify-content: center ;
 	align-items: center;
-	gap: 8px;
+	gap: 2px;
 
-	font-size: 32px;
-	letter-spacing: 0.05em;
+	font-size: 16px;
+	color: #1D1D1F;
 }
 	
+.sum--big {
+	font-size: 32px;
+	letter-spacing: 0.05em; 
+}
+
 .sum__bold {
 	font-weight: 600;
 }
 
 .sum__thin {
 	font-weight: 400;
+	color: #939199;
 }
 
 .sum--white {

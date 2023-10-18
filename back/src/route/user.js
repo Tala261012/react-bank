@@ -274,7 +274,7 @@ router.post('/signup-confirm', function (req, res) {
       })
     }
 
-    session.user = user
+    session.user.isConfirm = true
 
     // console.log(session)
 
@@ -332,6 +332,83 @@ router.post('/signin', function (req, res) {
     return res
       .status(400)
       .json({ message: 'Ошибка входа в аккаунт.' })
+  }
+})
+
+// ========================================================================
+
+router.post('/settings-email', function (req, res) {
+  const {
+    token,
+    date,
+    type,
+    old_email,
+    new_email,
+    password,
+  } = req.body
+
+  if (
+    !token ||
+    !date ||
+    !type ||
+    !old_email ||
+    !new_email ||
+    !password
+  ) {
+    return res.status(400).json({
+      message: 'Ошибка! Обязательные поля отсутствуют.',
+    })
+  }
+
+  try {
+    const user = User.getByEmail(old_email)
+
+    if (!user) {
+      return res.status(400).json({
+        message: `Пользователь с таким email (${old_email}) не зарегистрирован.`,
+      })
+    }
+
+    if (password !== user.password) {
+      return res.status(400).json({
+        message: `Пароль неверный.`,
+      })
+    }
+
+    const session = Session.getByToken(token)
+
+    if (!session) {
+      return res.status(400).json({
+        message: `Ошибка сессии.`,
+      })
+    }
+
+    const email = String(new_email).toLowerCase()
+
+    user.email = email
+    user.isConfirm = false
+
+    // console.log(user)
+
+    session.user.email = email
+    session.user.isConfirm = false
+
+    // console.log(session)
+
+    const confirm = Confirm.create(email)
+
+    // console.log(confirm)
+
+    return res.status(200).json({
+      message:
+        'Почта успешно изменена. На неё выслан код для подтверждения.',
+      session,
+      code: confirm.code,
+    })
+  } catch (error) {
+    return res
+      .status(400)
+      .json({ message: 'Ошибка смены почты...' })
   }
 })
 

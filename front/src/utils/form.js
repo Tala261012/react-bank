@@ -366,4 +366,92 @@ export class SigninForm {
   };
 }
 
+// ======================================================================================
+
+export class SettingsEmailForm {
+  static FIELD_NAME = {
+    OLD_EMAIL: "old_email",
+    NEW_EMAIL: "new_email",
+    PASSWORD: "password",
+    TOKEN: "token",
+    ACTION_TYPE: "type",
+    DATE: "date",
+  };
+
+  // тут - заготовленные тексты на случай ошибок при валидации
+  static FIELD_ERROR = {
+    IS_EMPTY: "Введите значение в поле",
+    IS_BIG: "Слишком длинное значение, уберите лишнее",
+    EMAIL: "Введите корректное значение e-mail адреса",
+  };
+
+  static error = {}; // объект с ошибками
+  static value = {}; // объект со значениями
+
+  static validate = (name, value) => {
+    if (String(value).length < 1) {
+      return this.FIELD_ERROR.IS_EMPTY;
+    }
+
+    if (String(value).length > 30) {
+      return this.FIELD_ERROR.IS_BIG;
+    }
+
+    if (name === this.FIELD_NAME.EMAIL) {
+      if (!REG_EXP_EMAIL.test(String(value))) {
+        return this.FIELD_ERROR.EMAIL;
+      }
+    }
+  };
+
+  static change = (name, value) => {
+    const error = this.validate(name, value);
+    this.value[name] = value;
+
+    if (error) {
+      this.error[name] = error;
+    } else {
+      delete this.error[name];
+    }
+  };
+
+  static validateAll = () => {
+    Object.entries(this.value).forEach(([name, value]) => {
+      const error = this.validate(name, value);
+
+      if (error) {
+        this.error[name] = error;
+      } else {
+        delete this.error[name];
+      }
+    });
+  };
+
+  static setOldEmail = (email) => {
+    this.value[this.FIELD_NAME.OLD_EMAIL] = email;
+  };
+
+  static setToken = (token) => {
+    this.value[this.FIELD_NAME.TOKEN] = token;
+  };
+
+  static setDate = () => {
+    this.value[this.FIELD_NAME.DATE] = new Date().getTime();
+  };
+
+  static convertData = () => {
+    this.setDate();
+    return JSON.stringify({
+      [this.FIELD_NAME.TOKEN]: this.value[this.FIELD_NAME.TOKEN],
+      [this.FIELD_NAME.DATE]: this.value[this.FIELD_NAME.DATE],
+      [this.FIELD_NAME.ACTION_TYPE]: "EMAIL_CHANGE",
+      [this.FIELD_NAME.OLD_EMAIL]: this.value[this.FIELD_NAME.OLD_EMAIL],
+      [this.FIELD_NAME.NEW_EMAIL]: this.value[this.FIELD_NAME.NEW_EMAIL],
+      [this.FIELD_NAME.PASSWORD]: this.value[this.FIELD_NAME.PASSWORD],
+    });
+  };
+}
+
+// ======================================================================================
+
 // module.exports = { SignupForm };
