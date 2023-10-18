@@ -7,6 +7,7 @@ import Line from "../../component/line";
 
 import Header from "../../container/header";
 import SettingsEmail from "../../container/settings-email";
+import Logout from "../../container/logout";
 
 export default function Component() {
   return (
@@ -16,6 +17,7 @@ export default function Component() {
         <Form>
           <SettingsEmail />
           <Line />
+          <Logout />
         </Form>
       </Grid>
     </Page>

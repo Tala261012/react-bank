@@ -6,6 +6,7 @@ const router = express.Router()
 const { User } = require('../class/user')
 const { Confirm } = require('../class/confirm')
 const { Session } = require('../class/session')
+const { Notification } = require('../class/notification')
 
 // ========================================================================
 
@@ -278,6 +279,12 @@ router.post('/signup-confirm', function (req, res) {
 
     // console.log(session)
 
+    const notification = Notification.create(
+      session.token,
+      'LOG_IN',
+    )
+    console.log(notification)
+
     return res.status(200).json({
       message: 'Почта подтверждена.',
       session,
@@ -324,6 +331,12 @@ router.post('/signin', function (req, res) {
       })
     }
 
+    const notification = Notification.create(
+      session.token,
+      'LOG_IN',
+    )
+    // console.log(notification)
+
     return res.status(200).json({
       message: 'Вход разрешен.',
       session,
@@ -338,18 +351,11 @@ router.post('/signin', function (req, res) {
 // ========================================================================
 
 router.post('/settings-email', function (req, res) {
-  const {
-    token,
-    date,
-    type,
-    old_email,
-    new_email,
-    password,
-  } = req.body
+  const { token, type, old_email, new_email, password } =
+    req.body
 
   if (
     !token ||
-    !date ||
     !type ||
     !old_email ||
     !new_email ||
@@ -397,7 +403,8 @@ router.post('/settings-email', function (req, res) {
 
     const confirm = Confirm.create(email)
 
-    // console.log(confirm)
+    Notification.create(token, type)
+    // console.log(notification)
 
     return res.status(200).json({
       message:
@@ -413,5 +420,36 @@ router.post('/settings-email', function (req, res) {
 })
 
 // ========================================================================
+
+router.get('/notification', function (req, res) {
+  const list = Notification.getList()
+  return res.status(200).json(list)
+})
+
+// ========================================================================
+
+router.post('/logout', function (req, res) {
+  const { token } = req.body
+
+  // console.log(token)
+
+  if (!token) {
+    return res.status(400).json({
+      message: 'Ошибка! Обязательные поля отсутствуют.',
+    })
+  }
+
+  try {
+    Notification.create(token, 'LOG_OUT')
+
+    return res.status(200).json({
+      message: 'Успешно.',
+    })
+  } catch (error) {
+    return res
+      .status(400)
+      .json({ message: 'Ошибка выхода из аккаунта...' })
+  }
+})
 
 module.exports = router

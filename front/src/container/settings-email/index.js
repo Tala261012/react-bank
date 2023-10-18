@@ -78,7 +78,7 @@ export default function Component() {
       SettingsEmailForm.setToken(state.token);
       SettingsEmailForm.setOldEmail(state.user.email);
 
-      console.log("Result of changing email:", SettingsEmailForm.convertData());
+      // console.log("Result of changing email:", SettingsEmailForm.convertData());
 
       submit();
     }
@@ -163,7 +163,7 @@ export default function Component() {
           isError={passwordError}
           name={"password"}
           label={"Old password:"}
-          placeholder={"Create your passowrd"}
+          placeholder={"Write your current passowrd"}
           onInput={handlePasswordInput}
         />
         <span ref={passwordSpan} className="form__error">
@@ -174,8 +174,8 @@ export default function Component() {
       <Button
         isDisabled={isDisabled}
         onClick={handleSubmit}
-        className={"button-main"}
-        text={"Continue"}
+        className={"button-purple"}
+        text={"Save Email"}
       />
 
       <Alert className={alertClass.status} alertText={alertClass.text} />

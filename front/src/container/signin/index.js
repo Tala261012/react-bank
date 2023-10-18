@@ -153,7 +153,7 @@ export default function Component() {
           isError={passwordError}
           name={"password"}
           label={"Password:"}
-          placeholder={"Create your passowrd"}
+          placeholder={"Write your passowrd"}
           onInput={handlePasswordInput}
         />
         <span ref={passwordSpan} className="form__error">

@@ -397,7 +397,7 @@ export class SettingsEmailForm {
       return this.FIELD_ERROR.IS_BIG;
     }
 
-    if (name === this.FIELD_NAME.EMAIL) {
+    if (name === this.FIELD_NAME.NEW_EMAIL) {
       if (!REG_EXP_EMAIL.test(String(value))) {
         return this.FIELD_ERROR.EMAIL;
       }
@@ -435,15 +435,9 @@ export class SettingsEmailForm {
     this.value[this.FIELD_NAME.TOKEN] = token;
   };
 
-  static setDate = () => {
-    this.value[this.FIELD_NAME.DATE] = new Date().getTime();
-  };
-
   static convertData = () => {
-    this.setDate();
     return JSON.stringify({
       [this.FIELD_NAME.TOKEN]: this.value[this.FIELD_NAME.TOKEN],
-      [this.FIELD_NAME.DATE]: this.value[this.FIELD_NAME.DATE],
       [this.FIELD_NAME.ACTION_TYPE]: "EMAIL_CHANGE",
       [this.FIELD_NAME.OLD_EMAIL]: this.value[this.FIELD_NAME.OLD_EMAIL],
       [this.FIELD_NAME.NEW_EMAIL]: this.value[this.FIELD_NAME.NEW_EMAIL],

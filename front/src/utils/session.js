@@ -5,7 +5,7 @@ export const saveSession = (session) => {
     // window.session = session; // чтоб можно было обратиться из любой страницы моего приложения
     localStorage.setItem(SESSION_KEY, JSON.stringify(session));
 
-    console.log("session", session);
+    // console.log("session", session);
 
     return session;
   } catch (error) {
@@ -36,6 +36,7 @@ export const loadSession = (session) => {
 export const endSession = () => {
   try {
     localStorage.removeItem(SESSION_KEY);
+    console.log("deleted!");
   } catch (error) {
     console.log(error);
   } finally {
