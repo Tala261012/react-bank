@@ -76,7 +76,6 @@ export default function Component() {
       const state = Object.entries(auth)[0][1];
 
       SettingsEmailForm.setToken(state.token);
-      SettingsEmailForm.setOldEmail(state.user.email);
 
       // console.log("Result of changing email:", SettingsEmailForm.convertData());
 

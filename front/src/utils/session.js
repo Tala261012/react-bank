@@ -36,7 +36,7 @@ export const loadSession = (session) => {
 export const endSession = () => {
   try {
     localStorage.removeItem(SESSION_KEY);
-    console.log("deleted!");
+    // console.log("deleted!");
   } catch (error) {
     console.log(error);
   } finally {

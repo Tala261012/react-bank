@@ -33,15 +33,13 @@ router.post('/signup', function (req, res) {
 
     const newUser = User.create(email, password)
 
-    console.log(newUser)
+    // console.log(newUser)
 
     const session = Session.create(newUser)
 
     const confirm = Confirm.create(newUser.email)
 
-    console.log(confirm.code)
-
-    //confirm email
+    // console.log(confirm.code)
 
     return res.status(200).json({
       message:
@@ -116,7 +114,7 @@ router.post('/recovery', function (req, res) {
 router.post('/recovery-confirm', function (req, res) {
   const { password, code, email } = req.body
 
-  console.log(password, code, email)
+  // console.log(password, code, email)
 
   if (!password || !code || !email) {
     return res.status(400).json({
@@ -229,7 +227,7 @@ router.get('/signup-confirm', function (req, res) {
 router.post('/signup-confirm', function (req, res) {
   const { code, email } = req.body
 
-  console.log(code, email)
+  // console.log(code, email)
 
   if (!code || !email) {
     return res.status(400).json({
@@ -246,7 +244,7 @@ router.post('/signup-confirm', function (req, res) {
         .json({ message: 'Такого кода нет.' })
     }
 
-    console.log(elemByCode)
+    // console.log(elemByCode)
 
     if (elemByCode.email !== String(email)) {
       return res
@@ -283,7 +281,7 @@ router.post('/signup-confirm', function (req, res) {
       session.token,
       'LOG_IN',
     )
-    console.log(notification)
+    // console.log(notification)
 
     return res.status(200).json({
       message: 'Почта подтверждена.',
@@ -335,7 +333,6 @@ router.post('/signin', function (req, res) {
       session.token,
       'LOG_IN',
     )
-    // console.log(notification)
 
     return res.status(200).json({
       message: 'Вход разрешен.',
@@ -351,22 +348,25 @@ router.post('/signin', function (req, res) {
 // ========================================================================
 
 router.post('/settings-email', function (req, res) {
-  const { token, type, old_email, new_email, password } =
-    req.body
+  const { token, type, new_email, password } = req.body
 
-  if (
-    !token ||
-    !type ||
-    !old_email ||
-    !new_email ||
-    !password
-  ) {
+  if (!token || !type || !new_email || !password) {
     return res.status(400).json({
       message: 'Ошибка! Обязательные поля отсутствуют.',
     })
   }
 
   try {
+    const session = Session.getByToken(token)
+
+    if (!session) {
+      return res.status(400).json({
+        message: `Ошибка сессии.`,
+      })
+    }
+
+    const old_email = session.user.email
+
     const user = User.getByEmail(old_email)
 
     if (!user) {
@@ -381,30 +381,17 @@ router.post('/settings-email', function (req, res) {
       })
     }
 
-    const session = Session.getByToken(token)
-
-    if (!session) {
-      return res.status(400).json({
-        message: `Ошибка сессии.`,
-      })
-    }
-
     const email = String(new_email).toLowerCase()
 
     user.email = email
     user.isConfirm = false
 
-    // console.log(user)
-
     session.user.email = email
     session.user.isConfirm = false
-
-    // console.log(session)
 
     const confirm = Confirm.create(email)
 
     Notification.create(token, type)
-    // console.log(notification)
 
     return res.status(200).json({
       message:
@@ -416,6 +403,57 @@ router.post('/settings-email', function (req, res) {
     return res
       .status(400)
       .json({ message: 'Ошибка смены почты...' })
+  }
+})
+
+// ========================================================================
+
+router.post('/settings-password', function (req, res) {
+  const { token, type, old_password, new_password } =
+    req.body
+
+  if (!token || !type || !old_password || !new_password) {
+    return res.status(400).json({
+      message: 'Ошибка! Обязательные поля отсутствуют.',
+    })
+  }
+
+  try {
+    const session = Session.getByToken(token)
+
+    if (!session) {
+      return res.status(400).json({
+        message: `Ошибка сессии.`,
+      })
+    }
+
+    const user = User.getByEmail(session.user.email)
+
+    if (!user) {
+      return res.status(400).json({
+        message: `Пользователь с таким email (${old_email}) не зарегистрирован.`,
+      })
+    }
+
+    if (old_password !== user.password) {
+      return res.status(400).json({
+        message: `Пароль неверный.`,
+      })
+    }
+
+    user.password = new_password
+
+    const temp = Notification.create(token, type)
+
+    console.log(temp)
+
+    return res.status(200).json({
+      message: 'Пароль успешно изменен.',
+    })
+  } catch (error) {
+    return res
+      .status(400)
+      .json({ message: 'Ошибка смены пароля...' })
   }
 })
 

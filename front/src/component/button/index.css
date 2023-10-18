@@ -1,5 +1,4 @@
 .button {
-	padding: 20px;
 	width: 100%;
 	border: 1px solid transparent;
 	border-radius: 12px;
@@ -20,6 +19,7 @@
 .button[disabled] {
 	border-color: lightgray;
 	background-color: rgb(226, 226, 226);
+	color: white;
 }
 
 .button-main {
@@ -28,20 +28,23 @@
 	color: white;
 	font-size: 16px;
 	font-weight: 500;
+	padding: 20px;
 }
 
 .button-purple {
 	border-color: #775CE5;
 	background-color: white;
 	color: #775CE5;
-	font-size: 16px;
-	font-weight: 500;
+	font-size: 14px;
+	font-weight: 400;
+	padding: 16px;	
 }
 
 .button-red {
 	border-color: #f23152;
 	background-color: white;
 	color: #f23152;
-	font-size: 16px;
-	font-weight: 500;
+	font-size: 14px;
+	font-weight: 400;
+	padding: 16px;	
 }
