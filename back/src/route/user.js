@@ -459,9 +459,49 @@ router.post('/settings-password', function (req, res) {
 
 // ========================================================================
 
-router.get('/notification', function (req, res) {
+router.get('/notific', function (req, res) {
   const list = Notification.getList()
   return res.status(200).json(list)
+})
+
+// ========================================================================
+
+// ========================================================================
+
+router.get('/notifications', function (req, res) {
+  const { token } = req.query
+
+  // console.log(token)
+
+  if (!token) {
+    return res.status(400).json({
+      message: 'Ошибка! Такой token не существует.',
+    })
+  }
+
+  try {
+    const list = Notification.getByToken(token)
+
+    // console.log(list)
+
+    if (!list) {
+      return res.status(400).json({
+        message:
+          'Ошибка! Нет данных о действиях пользователя.',
+      })
+    }
+
+    return res.status(200).json({
+      message: 'Данные получены.',
+      list: list.map(({ id, date, type }) => ({
+        id,
+        date,
+        type,
+      })),
+    })
+  } catch (error) {
+    return res.status(400).json({ message: error.message })
+  }
 })
 
 // ========================================================================

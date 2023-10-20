@@ -1,7 +1,9 @@
 class Notification {
   static #list = []
+  static #count = 1
 
   constructor(token, type) {
+    this.id = Notification.#count++
     this.token = token
     this.date = new Date().getTime()
     this.type = type
