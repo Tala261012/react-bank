@@ -9,6 +9,7 @@ import { useState, useContext, useEffect, Fragment } from "react";
 import FormSmall from "../../component/form-small";
 import Alert from "../../component/alert";
 import Box from "../../component/box";
+import InfoBox from "../../component/info-box";
 
 import { getDateAgo } from "../../utils/scripts";
 
@@ -105,7 +106,15 @@ export default function Component() {
       {alertClass.status === "success" &&
         formattedList.map((item) => (
           <Fragment key={item.id}>
-            <Box>{item.date}</Box>
+            <Box>
+              <InfoBox
+                image={item.icon}
+                title={item.description}
+                subtitleClass={"on"}
+                subtitleTime={item.date}
+                subtitleType={item.short}
+              />
+            </Box>
           </Fragment>
         ))}
 
