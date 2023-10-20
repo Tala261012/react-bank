@@ -4,7 +4,7 @@ import "./index.css";
 
 import ReceiveButton from "../../component/receive-button";
 import SendButton from "../../component/send-button";
-import MainSum from "../../component/sum-big";
+import MainSum from "../../component/sum";
 
 export default function Component({ value }) {
   return (

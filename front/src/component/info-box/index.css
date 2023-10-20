@@ -1,0 +1,95 @@
+.infobox {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 8px;
+}
+
+.rightbox {
+	display: none;
+}
+
+.rightbox--on {
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+}
+
+.leftbox {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	gap: 12px;
+}
+
+.info {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	gap: 8px;
+}
+
+.info__title {
+	font-size: 16px;
+	font-weight: 500;
+	color: #1d1d1f;
+}
+
+.info__subtitle-block-- {
+	display: none;
+}
+
+.info__subtitle-block--on {
+	display: flex;
+	gap: 4px;
+	align-items: center;
+}
+
+.info__subtitle {
+	font-size: 12px;
+	font-weight: 400;
+	color: #939199;
+}
+
+.info__subtitle--decor {
+	display: inline-block;
+	height: 4px;
+	width: 4px;
+	background-color: #939199;
+	border-radius: 2px;
+}
+
+.icon {
+	background-color: #f7f7f7;
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	background-image: none;
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+
+.icon--big {
+	width: 48px;
+	height: 48px;
+}
+
+.warning {
+	background-image: url('../../../public/svg/warning.svg');
+}
+
+.announcement {
+	background-image: url('../../../public/svg/announcement.svg');
+}
+
+.send-money {
+	background-image: url('../../../public/svg/send-money.svg');
+}
+
+.coinbase {
+	background-image: url('../../../public/svg/coinbase.svg');
+}
+
+.stripe {
+	background-image: url('../../../public/svg/stripe.svg');
+}

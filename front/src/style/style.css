@@ -36,7 +36,7 @@
 .round-button {
 	padding: 12px;
 	background-color: #5B94E9;
-	border: 10px solid #f5f5f7;
+	border: 10px solid white;
 	border-radius: 50%;
 
 	transition-property: background-color;
