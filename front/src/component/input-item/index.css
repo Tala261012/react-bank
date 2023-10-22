@@ -51,7 +51,6 @@
 	color: #F23152;
 }
 
-.field__input--before {}
 
 .field__input--before::before {
 	content: '$';

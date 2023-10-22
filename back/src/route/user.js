@@ -40,7 +40,7 @@ router.post('/signup', function (req, res) {
 
     const bank = Bank.create(session.token)
 
-    console.log(bank)
+    // console.log(bank)
 
     const confirm = Confirm.create(newUser.email)
 
@@ -282,11 +282,7 @@ router.post('/signup-confirm', function (req, res) {
 
     // console.log(session)
 
-    const notification = Notification.create(
-      session.token,
-      'LOG_IN',
-    )
-    // console.log(notification)
+    Notification.create(session.token, 'LOG_IN')
 
     return res.status(200).json({
       message: 'Почта подтверждена.',

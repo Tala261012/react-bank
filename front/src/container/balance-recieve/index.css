@@ -1,0 +1,12 @@
+.box-active {
+	border: 1px solid transparent;
+	border-radius: 12px;
+}
+
+.box-active:hover {
+	border-color: #939199;
+}
+
+.box-active:active {
+	border-color: #775CE5;
+}

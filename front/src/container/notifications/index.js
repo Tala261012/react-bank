@@ -21,6 +21,7 @@ export default function Component() {
   // console.log("auth inside Signup:", auth);
 
   const getData = async () => {
+    // объект сессии, тут token & user
     const state = Object.entries(auth)[0][1];
 
     setAlertClass({ status: "progress", text: "Loading..." });
@@ -90,13 +91,15 @@ export default function Component() {
     }
   };
 
-  const formattedList = list.map(({ id, date, type }) => ({
-    id,
-    date: getDateAgo(date),
-    description: getTypeDescription(type),
-    short: getTypeShort(type),
-    icon: getTypeShort(type).toLowerCase(),
-  }));
+  const formattedList = list
+    .map(({ id, date, type }) => ({
+      id,
+      date: getDateAgo(date),
+      description: getTypeDescription(type),
+      short: getTypeShort(type),
+      icon: getTypeShort(type).toLowerCase(),
+    }))
+    .reverse();
 
   // console.log(formattedList);
 

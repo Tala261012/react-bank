@@ -4,6 +4,8 @@ const REG_EXP_PASSWORD = new RegExp(
   /^(?=.*\d)(?=.*[a-zа-я])(?=.*[A-ZА-Я])(?=.*[a-zA-Zа-яА-Я]).{8,}$/
 );
 
+const REG_EXP_CASH = new RegExp(/^[^-]*$/);
+
 // ======================================================================================
 
 // в этом объекте будут все данные одного пользователя
@@ -531,12 +533,19 @@ export class BalanceReceiveForm {
   static FIELD_ERROR = {
     IS_EMPTY: "Введите значение в поле",
     IS_BIG: "Слишком длинное значение, уберите лишнее",
+    CASH: "Некорректное значение.",
   };
 
   static error = {}; // объект с ошибками
   static value = {}; // объект со значениями
 
   static validate = (name, value) => {
+    if (name === this.FIELD_NAME.CASH) {
+      if (!REG_EXP_CASH.test(String(value))) {
+        return this.FIELD_ERROR.CASH;
+      }
+    }
+
     if (String(value).length < 1) {
       return this.FIELD_ERROR.IS_EMPTY;
     }
@@ -570,15 +579,15 @@ export class BalanceReceiveForm {
   };
 
   static setToken = (token) => {
-    this.value.FIELD_NAME.TOKEN = token;
+    this.value[this.FIELD_NAME.TOKEN] = token;
   };
 
   static setAddress = (address) => {
-    this.value.FIELD_NAME.ADDRESS = String(address);
+    this.value[this.FIELD_NAME.ADDRESS] = String(address);
   };
 
   static convertData = () => {
-    this.value.FIELD_NAME.TYPE = "GET_MONEY";
+    this.value[this.FIELD_NAME.TYPE] = "GET_MONEY";
 
     return JSON.stringify({
       [this.FIELD_NAME.TOKEN]: this.value[this.FIELD_NAME.TOKEN],
