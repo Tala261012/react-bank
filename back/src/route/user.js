@@ -7,6 +7,7 @@ const { User } = require('../class/user')
 const { Confirm } = require('../class/confirm')
 const { Session } = require('../class/session')
 const { Notification } = require('../class/notification')
+const { Bank } = require('../class/bank')
 
 // ========================================================================
 
@@ -36,6 +37,10 @@ router.post('/signup', function (req, res) {
     // console.log(newUser)
 
     const session = Session.create(newUser)
+
+    const bank = Bank.create(session.token)
+
+    console.log(bank)
 
     const confirm = Confirm.create(newUser.email)
 

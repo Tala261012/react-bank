@@ -4,6 +4,10 @@
 	gap: 8px;
 }
 
+.field__empty {
+	width: 97%;
+}
+
 .field__label {
 	font-size: 14px;
 	font-weight: 400;
@@ -12,6 +16,10 @@
 
 .field__label--error {
 	color: #F23152;
+}
+
+.field__label--off {
+	display: none;
 }
 
 .field__input {
@@ -41,4 +49,10 @@
 .field__input--error {
 	border-color: #F23152 !important;
 	color: #F23152;
+}
+
+.field__input--before {}
+
+.field__input--before::before {
+	content: '$';
 }

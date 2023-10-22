@@ -3,18 +3,17 @@ import "./index.css";
 import "../../style/style.css";
 
 import { AuthContext } from "../../App";
-import { useNavigate } from "react-router-dom";
 import { useState, useContext, useEffect, Fragment } from "react";
 
 import FormSmall from "../../component/form-small";
 import Alert from "../../component/alert";
 import Box from "../../component/box";
 import InfoBox from "../../component/info-box";
+import Skeleton from "../../component/skeleton";
 
 import { getDateAgo } from "../../utils/scripts";
 
 export default function Component() {
-  const navigate = useNavigate();
   const auth = useContext(AuthContext);
 
   const [list, setList] = useState([]);
@@ -103,6 +102,20 @@ export default function Component() {
 
   return (
     <FormSmall>
+      {alertClass.status === "progress" && (
+        <Fragment>
+          <Box>
+            <Skeleton subtitleClass={"on"} />
+          </Box>
+          <Box>
+            <Skeleton subtitleClass={"on"} />
+          </Box>
+          <Box>
+            <Skeleton subtitleClass={"on"} />
+          </Box>
+        </Fragment>
+      )}
+
       {alertClass.status === "success" &&
         formattedList.map((item) => (
           <Fragment key={item.id}>

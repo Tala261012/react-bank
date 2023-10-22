@@ -38,12 +38,14 @@
 
 .alert--success {
 	border-color: #b1f5ae;
-	background-color: #ebfcea;
+	/* background-color: #ebfcea; */
+	background-color: transparent;
 	color: #24B277;
 }
 
 .alert--progress {
 	border-color: #d4e4fa;
-	background-color: #ecf2fc;
+	/* background-color: #ecf2fc; */
+	background-color: transparent;
 	color: #5894E9;
 }

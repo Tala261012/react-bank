@@ -1,3 +1,4 @@
+// только этот класс назначает время события и передает его в другие классы
 class Notification {
   static #list = []
   static #count = 1

@@ -72,7 +72,7 @@ export const getDate = (time) => {
 export const getDateAgo = (time) => {
   const disparity = new Date().getTime() - time;
 
-  const minutes = disparity / 1000 / 60; // кол-во минут
+  const minutes = Math.floor(disparity / 1000 / 60); // кол-во минут
 
   if (minutes < 60) {
     return `${minutes} min. ago`;

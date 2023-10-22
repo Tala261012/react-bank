@@ -10,9 +10,12 @@ export default function Component({
   placeholder = "",
   isError = false,
   onInput,
+  // чтоб не было label, включить: labelOff={'field__label--off'}
+  labelOff = "",
+  // значок $ перед цифрой, включить before={"field__input--before}
+  before = "",
 }) {
   const [inputValue, setInputValue] = useState("");
-
   const handleInput = (event) => {
     const newValue = event.target.value;
     setInputValue(newValue);
@@ -24,20 +27,28 @@ export default function Component({
     <div className="field">
       <label
         className={
-          isError ? "field__label field__label--error" : "field__label"
+          isError
+            ? `field__label field__label--error ${labelOff}`
+            : `field__label ${labelOff}`
         }
       >
         {label}
       </label>
-      <input
+      <div
         className={
-          isError ? `field__input field__input--error` : "field__input"
+          isError
+            ? `field__input field__input--error  ${before}`
+            : `field__input ${before}`
         }
-        name={name}
-        type={type}
-        placeholder={placeholder}
-        onInput={handleInput}
-      />
+      >
+        <input
+          className={"field__empty"}
+          name={name}
+          type={type}
+          placeholder={placeholder}
+          onInput={handleInput}
+        />
+      </div>
     </div>
   );
 }

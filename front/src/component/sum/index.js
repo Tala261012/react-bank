@@ -7,7 +7,13 @@ export default function Component({
   className = "",
   classSize = "",
 }) {
-  const sumArr = String(value).split(".");
+  let sumStr = String(value);
+
+  if (!sumStr.includes(".")) {
+    sumStr = sumStr + ".00";
+  }
+
+  const sumArr = sumStr.split(".");
 
   return (
     <div className="sum__block">

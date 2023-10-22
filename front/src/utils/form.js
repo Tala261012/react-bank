@@ -515,3 +515,78 @@ export class SettingsPasswordForm {
 }
 
 // ======================================================================================
+
+// ======================================================================================
+
+// смена пароля по коду
+export class BalanceReceiveForm {
+  static FIELD_NAME = {
+    TOKEN: "token",
+    TYPE: "type",
+    ADDRESS: "address",
+    CASH: "cash",
+  };
+
+  // тут - заготовленные тексты на случай ошибок при валидации
+  static FIELD_ERROR = {
+    IS_EMPTY: "Введите значение в поле",
+    IS_BIG: "Слишком длинное значение, уберите лишнее",
+  };
+
+  static error = {}; // объект с ошибками
+  static value = {}; // объект со значениями
+
+  static validate = (name, value) => {
+    if (String(value).length < 1) {
+      return this.FIELD_ERROR.IS_EMPTY;
+    }
+
+    if (String(value).length > 30) {
+      return this.FIELD_ERROR.IS_BIG;
+    }
+  };
+
+  static change = (name, value) => {
+    const error = this.validate(name, value);
+    this.value[name] = value;
+
+    if (error) {
+      this.error[name] = error;
+    } else {
+      delete this.error[name];
+    }
+  };
+
+  static validateAll = () => {
+    Object.entries(this.value).forEach(([name, value]) => {
+      const error = this.validate(name, value);
+
+      if (error) {
+        this.error[name] = error;
+      } else {
+        delete this.error[name];
+      }
+    });
+  };
+
+  static setToken = (token) => {
+    this.value.FIELD_NAME.TOKEN = token;
+  };
+
+  static setAddress = (address) => {
+    this.value.FIELD_NAME.ADDRESS = String(address);
+  };
+
+  static convertData = () => {
+    this.value.FIELD_NAME.TYPE = "GET_MONEY";
+
+    return JSON.stringify({
+      [this.FIELD_NAME.TOKEN]: this.value[this.FIELD_NAME.TOKEN],
+      [this.FIELD_NAME.TYPE]: this.value[this.FIELD_NAME.TYPE],
+      [this.FIELD_NAME.ADDRESS]: this.value[this.FIELD_NAME.ADDRESS],
+      [this.FIELD_NAME.CASH]: Number(this.value[this.FIELD_NAME.CASH]),
+    });
+  };
+}
+
+// ======================================================================================
