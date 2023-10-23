@@ -6,10 +6,11 @@ import { useState } from "react";
 export default function Component({
   name = "",
   label = "",
-  type = "text",
   placeholder = "",
   isError = false,
   onInput,
+  // чтоб не было label, включить: labelOff={'field__label--off'}
+  labelOff = "",
 }) {
   const [inputValue, setInputValue] = useState("");
   const handleInput = (event) => {
@@ -23,20 +24,28 @@ export default function Component({
     <div className="field">
       <label
         className={
-          isError ? `field__label field__label--error` : `field__label`
+          isError
+            ? `field__label field__label--error ${labelOff}`
+            : `field__label ${labelOff}`
         }
       >
         {label}
       </label>
-      <input
+      <div
         className={
-          isError ? `field__input field__input--error` : `field__input`
+          isError
+            ? `field__input field__input--error  field__input--before`
+            : `field__input field__input--before`
         }
-        name={name}
-        type={type}
-        placeholder={placeholder}
-        onInput={handleInput}
-      />
+      >
+        <input
+          className={"field__empty"}
+          name={name}
+          type={"number"}
+          placeholder={placeholder}
+          onInput={handleInput}
+        />
+      </div>
     </div>
   );
 }

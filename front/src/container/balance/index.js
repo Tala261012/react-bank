@@ -8,7 +8,6 @@ import { AuthContext } from "../../App";
 import { getDateShort } from "../../utils/scripts";
 import Alert from "../../component/alert";
 import Sum from "../../component/sum";
-import Box from "../../component/box";
 import FormSmall from "../../component/form-small";
 import Skeleton from "../../component/skeleton";
 import InfoBox from "../../component/info-box";
@@ -141,6 +140,9 @@ export default function Component() {
     }))
     .reverse();
 
+  let isEmpty = true;
+  if (list.length !== 0) isEmpty = false;
+
   return (
     <FormSmall>
       <WalletHeading value={sum} />
@@ -164,22 +166,36 @@ export default function Component() {
         </Fragment>
       )}
 
-      {alertClass.status === "success" &&
-        formattedList.map((item) => (
-          <Fragment key={item.id}>
-            <InfoBox
-              size={"icon--big"}
-              image={item.icon}
-              title={item.name}
-              subtitleClass={"on"}
-              subtitleTime={item.date}
-              subtitleType={item.short}
-              rightbox={"rightbox--on"}
-            >
-              <Sum value={item.cash} sign={item.sign} className={item.class} />
-            </InfoBox>
-          </Fragment>
-        ))}
+      {alertClass.status === "success" && (
+        <Fragment>
+          {isEmpty ? (
+            <Alert
+              className={"progress"}
+              alertText={"Пока не было ни одной операции..."}
+            />
+          ) : (
+            formattedList.map((item) => (
+              <Fragment key={item.id}>
+                <InfoBox
+                  size={"icon--big"}
+                  image={item.icon}
+                  title={item.name}
+                  subtitleClass={"on"}
+                  subtitleTime={item.date}
+                  subtitleType={item.short}
+                  rightbox={"rightbox--on"}
+                >
+                  <Sum
+                    value={item.cash}
+                    sign={item.sign}
+                    className={item.class}
+                  />
+                </InfoBox>
+              </Fragment>
+            ))
+          )}
+        </Fragment>
+      )}
 
       <Alert className={alertClass.status} alertText={alertClass.text} />
     </FormSmall>

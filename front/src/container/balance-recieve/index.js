@@ -13,7 +13,7 @@ import InfoBox from "../../component/info-box";
 import Form from "../../component/form";
 import FormSmall from "../../component/form-small";
 import Alert from "../../component/alert";
-import InputItem from "../../component/input-item";
+import InputCash from "../../component/input-cash";
 
 export default function Component() {
   const navigate = useNavigate();
@@ -116,13 +116,11 @@ export default function Component() {
       <FormSmall>
         <h2 className="sub-title">Receive amount</h2>
         <div>
-          <InputItem
+          <InputCash
             isError={cashError}
             name={"cash"}
-            type={"number"}
             placeholder={"Enter amount"}
             onInput={handleCashInput}
-            before={"field__input--before"}
             labelOff={"field__label--off"}
           />
           <span ref={cashSpan} className="form__error">

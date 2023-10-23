@@ -37,15 +37,13 @@
 }
 
 .alert--success {
-	border-color: #b1f5ae;
-	/* background-color: #ebfcea; */
+	border-color: #cacaca;
 	background-color: transparent;
-	color: #24B277;
+	color: #cacaca;
 }
 
 .alert--progress {
-	border-color: #d4e4fa;
-	/* background-color: #ecf2fc; */
+	border-color: #bebec0;
 	background-color: transparent;
 	color: #5894E9;
 }

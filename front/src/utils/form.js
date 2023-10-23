@@ -520,7 +520,7 @@ export class SettingsPasswordForm {
 
 // ======================================================================================
 
-// смена пароля по коду
+// Пополнить свой счет
 export class BalanceReceiveForm {
   static FIELD_NAME = {
     TOKEN: "token",
@@ -588,6 +588,91 @@ export class BalanceReceiveForm {
 
   static convertData = () => {
     this.value[this.FIELD_NAME.TYPE] = "GET_MONEY";
+
+    return JSON.stringify({
+      [this.FIELD_NAME.TOKEN]: this.value[this.FIELD_NAME.TOKEN],
+      [this.FIELD_NAME.TYPE]: this.value[this.FIELD_NAME.TYPE],
+      [this.FIELD_NAME.ADDRESS]: this.value[this.FIELD_NAME.ADDRESS],
+      [this.FIELD_NAME.CASH]: Number(this.value[this.FIELD_NAME.CASH]),
+    });
+  };
+}
+
+// ======================================================================================
+
+// ======================================================================================
+
+// перевод по email
+export class BalanceSendForm {
+  static FIELD_NAME = {
+    TOKEN: "token",
+    TYPE: "type",
+    ADDRESS: "address", // тут это email
+    CASH: "cash",
+  };
+
+  // тут - заготовленные тексты на случай ошибок при валидации
+  static FIELD_ERROR = {
+    IS_EMPTY: "Введите значение в поле",
+    IS_BIG: "Слишком длинное значение, уберите лишнее",
+    CASH: "Некорректное значение.",
+    EMAIL: "Введите корректное значение e-mail адреса",
+  };
+
+  static error = {}; // объект с ошибками
+  static value = {}; // объект со значениями
+
+  static validate = (name, value) => {
+    if (name === this.FIELD_NAME.CASH) {
+      if (!REG_EXP_CASH.test(String(value))) {
+        return this.FIELD_ERROR.CASH;
+      }
+    }
+
+    if (String(value).length < 1) {
+      return this.FIELD_ERROR.IS_EMPTY;
+    }
+
+    if (String(value).length > 30) {
+      return this.FIELD_ERROR.IS_BIG;
+    }
+
+    if (name === this.FIELD_NAME.ADDRESS) {
+      if (!REG_EXP_EMAIL.test(String(value))) {
+        return this.FIELD_ERROR.EMAIL;
+      }
+    }
+  };
+
+  static change = (name, value) => {
+    const error = this.validate(name, value);
+    this.value[name] = value;
+
+    if (error) {
+      this.error[name] = error;
+    } else {
+      delete this.error[name];
+    }
+  };
+
+  static validateAll = () => {
+    Object.entries(this.value).forEach(([name, value]) => {
+      const error = this.validate(name, value);
+
+      if (error) {
+        this.error[name] = error;
+      } else {
+        delete this.error[name];
+      }
+    });
+  };
+
+  static setToken = (token) => {
+    this.value[this.FIELD_NAME.TOKEN] = token;
+  };
+
+  static convertData = () => {
+    this.value[this.FIELD_NAME.TYPE] = "SEND_MONEY";
 
     return JSON.stringify({
       [this.FIELD_NAME.TOKEN]: this.value[this.FIELD_NAME.TOKEN],
