@@ -4,17 +4,23 @@ import "./index.css";
 
 import { useState, useContext, useEffect } from "react";
 import { AuthContext } from "../../App";
+import { useNavigate } from "react-router-dom";
 
-import { getDateShort } from "../../utils/scripts";
+import {
+  getDateShort,
+  getTypeShort,
+  getSignFromType,
+} from "../../utils/scripts";
 import Alert from "../../component/alert";
 import Sum from "../../component/sum";
-import FormMiddle from "../../component/form-middle";
+import FormSmall from "../../component/form-small";
 import Skeleton from "../../component/skeleton";
 import InfoBox from "../../component/info-box";
 import WalletHeading from "../wallet-heading";
 
 export default function Component() {
   const auth = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const [sum, setSum] = useState("0.00");
   const [list, setList] = useState([]);
@@ -83,6 +89,10 @@ export default function Component() {
     text: "",
   });
 
+  const handleTransaction = (id) => {
+    navigate(`/transaction/${id}`);
+  };
+
   const getNameFromAddress = (address) => {
     switch (address) {
       default:
@@ -94,17 +104,6 @@ export default function Component() {
     }
   };
 
-  const getTypeShort = (type) => {
-    switch (type) {
-      default:
-        return type;
-      case "GET_MONEY":
-        return "Receiving";
-      case "SEND_MONEY":
-        return "Sending";
-    }
-  };
-
   const getIconFromAddress = (address) => {
     switch (address) {
       default:
@@ -113,17 +112,6 @@ export default function Component() {
         return "stripe";
       case "Coinbase":
         return "coinbase";
-    }
-  };
-
-  const getSignFromType = (type) => {
-    switch (type) {
-      default:
-        return {};
-      case "GET_MONEY":
-        return { sign: "+$", class: "sum--green" };
-      case "SEND_MONEY":
-        return { sign: "-$", class: "" };
     }
   };
 
@@ -144,7 +132,7 @@ export default function Component() {
   if (list.length !== 0) isEmpty = false;
 
   return (
-    <FormMiddle>
+    <FormSmall>
       <WalletHeading value={sum} />
       {alertClass.status === "progress" && (
         <Fragment>
@@ -175,7 +163,11 @@ export default function Component() {
             />
           ) : (
             formattedList.map((item) => (
-              <Fragment key={item.id}>
+              <div
+                className="balance-item"
+                key={item.id}
+                onClick={() => handleTransaction(item.id)}
+              >
                 <InfoBox
                   size={"icon--big"}
                   image={item.icon}
@@ -191,13 +183,13 @@ export default function Component() {
                     className={item.class}
                   />
                 </InfoBox>
-              </Fragment>
+              </div>
             ))
           )}
         </Fragment>
       )}
 
       <Alert className={alertClass.status} alertText={alertClass.text} />
-    </FormMiddle>
+    </FormSmall>
   );
 }

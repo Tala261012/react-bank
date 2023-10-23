@@ -167,7 +167,7 @@ router.post('/balance-send', function (req, res) {
         receiverSession.token,
         receiverNotification.date,
         'GET_MONEY',
-        receiverSession.user.email,
+        session.user.email,
         cash,
       )
 
@@ -185,6 +185,42 @@ router.post('/balance-send', function (req, res) {
   } catch (error) {
     return res.status(400).json({ message: error.message })
   }
+})
+
+// ========================================================================
+
+router.get('/transaction', function (req, res) {
+  const { id } = req.query
+
+  if (!id) {
+    return res.status(400).json({
+      message: 'Ошибка. Обязательные поля отсутствуют.',
+    })
+  }
+
+  try {
+    const transaction = Balance.getById(Number(id))
+
+    if (!transaction) {
+      return res.status(400).json({
+        message: 'Ошибка транзакции.',
+      })
+    }
+
+    return res.status(200).json({
+      message: `Данные получены.`,
+      transaction,
+    })
+  } catch (error) {
+    return res.status(400).json({ message: error.message })
+  }
+})
+
+// ========================================================================
+
+router.get('/bal', function (req, res) {
+  const list = Balance.getList()
+  return res.status(200).json(list)
 })
 
 // ========================================================================

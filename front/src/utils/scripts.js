@@ -90,3 +90,27 @@ export const getDateAgo = (time) => {
     }
   }
 };
+
+//Установить тип Receiving или Sending, исходя из type
+export const getTypeShort = (type) => {
+  switch (type) {
+    default:
+      return type;
+    case "GET_MONEY":
+      return "Receiving";
+    case "SEND_MONEY":
+      return "Sending";
+  }
+};
+
+// Установить +$ или -$, цвет суммы, исходя из type
+export const getSignFromType = (type) => {
+  switch (type) {
+    default:
+      return {};
+    case "GET_MONEY":
+      return { sign: "+$", class: "sum--green" };
+    case "SEND_MONEY":
+      return { sign: "-$", class: "" };
+  }
+};

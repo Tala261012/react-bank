@@ -29,7 +29,7 @@ class Balance {
   }
 
   static getById = (id) => {
-    return this.#list.filter((elem) => elem.id === id)
+    return this.#list.find((elem) => elem.id === id)
   }
 
   static getList = () => {

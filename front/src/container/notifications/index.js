@@ -75,7 +75,7 @@ export default function Component() {
     }
   };
 
-  const getTypeShort = (type) => {
+  const getTypeShortNotif = (type) => {
     switch (type) {
       default:
         return type;
@@ -96,8 +96,8 @@ export default function Component() {
       id,
       date: getDateAgo(date),
       description: getTypeDescription(type),
-      short: getTypeShort(type),
-      icon: getTypeShort(type).toLowerCase(),
+      short: getTypeShortNotif(type),
+      icon: getTypeShortNotif(type).toLowerCase(),
     }))
     .reverse();
 

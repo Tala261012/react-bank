@@ -1,7 +1,7 @@
 import "./index.css";
 import "../../style/style.css";
 
-import { setError } from "../../utils/scripts";
+import { getDate, getTypeShort, getSignFromType } from "../../utils/scripts";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
@@ -18,25 +18,25 @@ export default function Component() {
   const getDetails = async () => {
     setAlertClass({ status: "progress", text: "Loading..." });
 
-    // try {
-    //   const res = await fetch(
-    //     `http://localhost:4000/balance?token=${state.token}`,
-    //     {
-    //       method: "GET",
-    //     }
-    //   );
+    try {
+      const res = await fetch(
+        `http://localhost:4000/transaction?id=${transactionId}`,
+        {
+          method: "GET",
+        }
+      );
 
-    //   const data = await res.json();
+      const data = await res.json();
 
-    //   if (res.ok) {
-    //     setAlertClass({ status: "success", text: data.message });
-    //     setDetails(data.sum);
-    //   } else {
-    //     setAlertClass({ status: "error", text: data.message });
-    //   }
-    // } catch (error) {
-    //   setAlertClass({ status: "error", text: error.message });
-    // }
+      if (res.ok) {
+        setAlertClass({ status: "success", text: data.message });
+        setDetails(data.transaction);
+      } else {
+        setAlertClass({ status: "error", text: data.message });
+      }
+    } catch (error) {
+      setAlertClass({ status: "error", text: error.message });
+    }
   };
 
   useEffect(() => {
@@ -48,16 +48,25 @@ export default function Component() {
     text: "",
   });
 
+  const item = {
+    date: getDate(details.date),
+    address: details.address,
+    type: getTypeShort(details.type),
+    cash: details.cash,
+    sign: getSignFromType(details.type).sign,
+    class: getSignFromType(details.type).class,
+  };
+
   return (
     <FormBig>
       <Sum
-        value={100}
-        sign={"+$"}
-        className={"sum--green"}
+        value={item.cash}
+        sign={item.sign}
+        className={item.class}
         classSize={"sum--big"}
       />
 
-      <Details date={"today"} address={"get@money.com"} type={"receive"} />
+      <Details date={item.date} address={item.address} type={item.type} />
 
       <Alert className={alertClass.status} alertText={alertClass.text} />
     </FormBig>

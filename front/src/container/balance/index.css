@@ -1,0 +1,17 @@
+.balance-item {
+	cursor: pointer;
+	padding: 2px;
+	border-radius: 12px;
+	background-color: transparent;
+
+	transition-property: background-color;
+	transition-duration: 0.3s;
+}
+
+.balance-item:hover {
+	background-color: #f7f7f7;
+}
+
+.balance-item:active {
+	background-color:#e9e8eb;
+}
