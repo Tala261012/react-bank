@@ -677,7 +677,9 @@ export class BalanceSendForm {
     return JSON.stringify({
       [this.FIELD_NAME.TOKEN]: this.value[this.FIELD_NAME.TOKEN],
       [this.FIELD_NAME.TYPE]: this.value[this.FIELD_NAME.TYPE],
-      [this.FIELD_NAME.ADDRESS]: this.value[this.FIELD_NAME.ADDRESS],
+      [this.FIELD_NAME.ADDRESS]: String(
+        this.value[this.FIELD_NAME.ADDRESS]
+      ).toLowerCase(),
       [this.FIELD_NAME.CASH]: Number(this.value[this.FIELD_NAME.CASH]),
     });
   };

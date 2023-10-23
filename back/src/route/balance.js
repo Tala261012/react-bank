@@ -116,4 +116,77 @@ router.get('/balance-list', function (req, res) {
 
 // ========================================================================
 
+router.post('/balance-send', function (req, res) {
+  const { token, type, address, cash } = req.body
+
+  if (!token || !type || !address || !cash) {
+    return res.status(400).json({
+      message: 'Ошибка. Обязательные поля отсутствуют.',
+    })
+  }
+
+  try {
+    const session = Session.getByToken(token)
+
+    if (!session) {
+      return res.status(400).json({
+        message: 'Ошибка сессии.',
+      })
+    }
+
+    const bank = Bank.getElemByToken(token)
+
+    if (bank.sum < cash) {
+      return res.status(400).json({
+        message: 'Недостаточно средств на счету.',
+      })
+    }
+
+    const notification = Notification.create(token, type)
+
+    const newBalance = Balance.create(
+      token,
+      notification.date,
+      type,
+      address,
+      cash,
+    )
+
+    bank.sum -= cash
+
+    //-------------------------------------------------------------------
+    const receiverSession = Session.getByEmail(address)
+
+    if (receiverSession) {
+      const receiverNotification = Notification.create(
+        receiverSession.token,
+        'GET_MONEY',
+      )
+
+      const receiverBalance = Balance.create(
+        receiverSession.token,
+        receiverNotification.date,
+        'GET_MONEY',
+        receiverSession.user.email,
+        cash,
+      )
+
+      const receiverBank = Bank.getElemByToken(
+        receiverSession.token,
+      )
+
+      receiverBank.sum += cash
+    }
+    //-------------------------------------------------------------------
+
+    return res.status(200).json({
+      message: `Успешный перевод средств на счет ${address}.`,
+    })
+  } catch (error) {
+    return res.status(400).json({ message: error.message })
+  }
+})
+
+// ========================================================================
+
 module.exports = router

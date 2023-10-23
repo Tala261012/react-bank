@@ -21,27 +21,26 @@ export default function Component() {
   // console.log("auth inside Signup:", auth);
 
   const submit = async () => {
-    // try {
-    //   const res = await fetch("http://localhost:4000/signup", {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: BalanceSendForm.convertData(),
-    //   });
-    //   const data = await res.json();
-    //   if (res.ok) {
-    //     setAlertClass({ status: "success", text: data.message });
-    //     // saveSession(data.session);
-    //     auth.dispatch({ type: "login", data: data.session });
-    //     alert(data.code);
-    //     navigate(`/signup-confirm`);
-    //   } else {
-    //     setAlertClass({ status: "error", text: data.message });
-    //   }
-    // } catch (error) {
-    //   setAlertClass({ status: "error", text: error.message });
-    // }
+    try {
+      const res = await fetch("http://localhost:4000/balance-send", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: BalanceSendForm.convertData(),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        setAlertClass({ status: "success", text: data.message });
+        navigate(`/balance`);
+      } else {
+        setAlertClass({ status: "error", text: data.message });
+      }
+    } catch (error) {
+      setAlertClass({ status: "error", text: error.message });
+    }
   };
 
   const handleSubmit = () => {
@@ -75,7 +74,10 @@ export default function Component() {
     } else {
       setAlertClass({ status: "progress", text: "Loading..." });
 
-      // console.log("Result:", BalanceSendForm.value);
+      // объект сессии, тут token & user
+      const state = Object.entries(auth)[0][1];
+
+      BalanceSendForm.setToken(state.token);
 
       submit();
     }
