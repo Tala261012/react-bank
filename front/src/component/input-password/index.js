@@ -1,5 +1,5 @@
 // унверсальная строка для пароля
-import "./index.css";
+import "../../style/input.css";
 
 import { useState, useRef } from "react";
 

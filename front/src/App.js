@@ -14,6 +14,7 @@ import NotificationsPage from "./page/notifications-page";
 import SettingsPage from "./page/settings-page";
 import ReceivePage from "./page/receive-page";
 import SendPage from "./page/send-page";
+import TransactionPage from "./page/transaction-page";
 
 export const AuthContext = createContext({});
 
@@ -180,6 +181,14 @@ function App() {
               element={
                 <PrivateRoute>
                   <SendPage />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/transaction/:transactionId"
+              element={
+                <PrivateRoute>
+                  <TransactionPage />
                 </PrivateRoute>
               }
             />

@@ -1,5 +1,5 @@
-// унверсальная строка ввода
-import "./index.css";
+// строка ввода для цифр, формат: $100
+import "../../style/input.css";
 
 import { useState, useRef } from "react";
 

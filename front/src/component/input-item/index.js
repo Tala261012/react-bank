@@ -1,5 +1,5 @@
 // унверсальная строка ввода
-import "./index.css";
+import "../../style/input.css";
 
 import { useState } from "react";
 

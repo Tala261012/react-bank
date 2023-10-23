@@ -1,10 +1,12 @@
-// Сумма, крупный шрифт
+// Сумма, крупный шрифт, мелкий, цвета
 import "./index.css";
 
 export default function Component({
   sign = "$",
   value = "0.00",
+  // установить цвет className={"sum--white"}
   className = "",
+  // установить крупный шрифт classSize={"sum--big"}
   classSize = "",
 }) {
   let sumStr = String(value);

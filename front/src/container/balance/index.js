@@ -8,7 +8,7 @@ import { AuthContext } from "../../App";
 import { getDateShort } from "../../utils/scripts";
 import Alert from "../../component/alert";
 import Sum from "../../component/sum";
-import FormSmall from "../../component/form-small";
+import FormMiddle from "../../component/form-middle";
 import Skeleton from "../../component/skeleton";
 import InfoBox from "../../component/info-box";
 import WalletHeading from "../wallet-heading";
@@ -144,7 +144,7 @@ export default function Component() {
   if (list.length !== 0) isEmpty = false;
 
   return (
-    <FormSmall>
+    <FormMiddle>
       <WalletHeading value={sum} />
       {alertClass.status === "progress" && (
         <Fragment>
@@ -198,6 +198,6 @@ export default function Component() {
       )}
 
       <Alert className={alertClass.status} alertText={alertClass.text} />
-    </FormSmall>
+    </FormMiddle>
   );
 }
