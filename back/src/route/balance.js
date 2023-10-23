@@ -24,7 +24,7 @@ router.get('/balance', function (req, res) {
   try {
     const sum = Bank.getSum(token)
 
-    console.log(sum)
+    // console.log(sum)
 
     if (!sum) {
       return res.status(400).json({
@@ -34,7 +34,7 @@ router.get('/balance', function (req, res) {
     }
 
     return res.status(200).json({
-      message: 'Данные получены.',
+      message: 'Доступная сумма успешно получена.',
       sum,
     })
   } catch (error) {
@@ -78,6 +78,36 @@ router.post('/balance-receive', function (req, res) {
 
     return res.status(200).json({
       message: 'Успешный перевод средств на ваш счет.',
+    })
+  } catch (error) {
+    return res.status(400).json({ message: error.message })
+  }
+})
+
+// ========================================================================
+
+router.get('/balance-list', function (req, res) {
+  const { token } = req.query
+
+  if (!token) {
+    return res.status(400).json({
+      message: 'Ошибка. Обязательные поля отсутствуют.',
+    })
+  }
+
+  try {
+    const list = Balance.getByToken(token)
+
+    if (!list) {
+      return res.status(400).json({
+        message:
+          'Ошибка! Нет данных о переводах пользователя.',
+      })
+    }
+
+    return res.status(200).json({
+      message: 'Данные о переводах получены.',
+      list,
     })
   } catch (error) {
     return res.status(400).json({ message: error.message })
