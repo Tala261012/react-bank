@@ -42,7 +42,7 @@
 	border-color: #939199;
 }
 
-.field__input:focus {
+.field__input--focus {
 	border-color: #775CE5;
 }
 

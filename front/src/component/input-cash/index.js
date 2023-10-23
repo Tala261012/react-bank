@@ -1,7 +1,7 @@
 // унверсальная строка ввода
 import "./index.css";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 export default function Component({
   name = "",
@@ -13,11 +13,22 @@ export default function Component({
   labelOff = "",
 }) {
   const [inputValue, setInputValue] = useState("");
+
+  const field = useRef(null);
+
   const handleInput = (event) => {
     const newValue = event.target.value;
     setInputValue(newValue);
 
     if (onInput) onInput(newValue);
+  };
+
+  const handleFocus = () => {
+    field.current.classList.toggle("field__input--focus", true);
+  };
+
+  const handleBlur = () => {
+    field.current.classList.toggle("field__input--focus", false);
   };
 
   return (
@@ -32,6 +43,7 @@ export default function Component({
         {label}
       </label>
       <div
+        ref={field}
         className={
           isError
             ? `field__input field__input--error  field__input--before`
@@ -44,6 +56,8 @@ export default function Component({
           type={"number"}
           placeholder={placeholder}
           onInput={handleInput}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
         />
       </div>
     </div>
