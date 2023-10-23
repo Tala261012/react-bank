@@ -2,7 +2,7 @@
 	padding-top: 8px;
 	font-size: 14px;
 	font-weight: 400;
-	color: #F23152;
+	color: var(--color-red);
 	
 	display: none;
 }
@@ -14,7 +14,7 @@
 .link {
 	font-size: 14px;
 	font-weight: 400;
-	color: #775CE5;
+	color: var(--color-main);
 }
 
 .link__prefix {
@@ -54,7 +54,7 @@
 .round-button__text {
 	font-size: 14px;
 	font-weight: 400;
-	color: #1D1D1F;
+	color: var(--color-black);
 }
 
 .sub-title {

@@ -81,10 +81,10 @@ export default function Component() {
         return type;
       case "PASSWORD_CHANGE":
       case "EMAIL_CHANGE":
-        return "Warning";
-
       case "LOG_IN":
       case "LOG_OUT":
+        return "Warning";
+
       case "GET_MONEY":
       case "SEND_MONEY":
         return "Announcement";

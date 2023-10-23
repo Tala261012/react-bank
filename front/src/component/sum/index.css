@@ -5,7 +5,7 @@
 	gap: 2px;
 
 	font-size: 16px;
-	color: #1D1D1F;
+	color: var(--color-black);
 }
 	
 .sum--big {
@@ -19,7 +19,7 @@
 
 .sum__thin {
 	font-weight: 400;
-	color: #939199;
+	color: var(--color-gray);
 }
 
 .sum--white {
@@ -27,9 +27,9 @@
 }
 
 .sum--green {
-	color: #24B277;
+	color: var(--color-green);
 }
 
 .sum--red {
-	color: #F23152;
+	color: var(--color-red);
 }

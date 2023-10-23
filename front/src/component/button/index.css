@@ -23,8 +23,8 @@
 }
 
 .button-main {
-	border-color: #775CE5;
-	background-color: #775CE5;
+	border-color: var(--color-main);
+	background-color: var(--color-main);
 	color: white;
 	font-size: 16px;
 	font-weight: 500;
@@ -32,18 +32,18 @@
 }
 
 .button-purple {
-	border-color: #775CE5;
+	border-color: var(--color-main);
 	background-color: white;
-	color: #775CE5;
+	color: var(--color-main);
 	font-size: 14px;
 	font-weight: 400;
 	padding: 16px;	
 }
 
 .button-red {
-	border-color: #f23152;
+	border-color: var(--color-red);
 	background-color: white;
-	color: #f23152;
+	color: var(--color-red);
 	font-size: 14px;
 	font-weight: 400;
 	padding: 16px;	

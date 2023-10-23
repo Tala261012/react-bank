@@ -8,3 +8,12 @@ body {
 
 	background-color: rgb(30, 30, 31);
 }
+
+:root {
+	--color-black: #1d1d1f;
+	--color-gray: #939199;
+	--color-light-gray: #e9e8eb;
+	--color-green: #24B277;
+	--color-red: #F23152;
+	--color-main: #775CE5;
+}

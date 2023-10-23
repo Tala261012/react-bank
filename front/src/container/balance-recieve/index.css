@@ -4,9 +4,9 @@
 }
 
 .box-active:hover {
-	border-color: #939199;
+	border-color: var(--color-gray);
 }
 
 .box-active:active {
-	border-color: #775CE5;
+	border-color: var(--color-main);
 }

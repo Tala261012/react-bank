@@ -58,7 +58,7 @@
 	display: inline-block;
 	height: 4px;
 	width: 4px;
-	background-color: #939199;
+	background-color: var(--color-gray);
 	border-radius: 4px;
 }
 

@@ -7,40 +7,40 @@
 .field__label {
 	font-size: 14px;
 	font-weight: 400;
-	color: #1D1D1F;
+	color: var(--color-black);
 }
 
 .field__label--error {
-	color: #F23152;
+	color: var(--color-red);
 }
 
 .field__input {
 	padding: 16px;
-	border: 1px solid #E9E8EB;
+	border: 1px solid var(--color-light-gray);
 	border-radius: 12px;
-	color: #1D1D1F;
+	color: var(--color-black);
 	background-color: white;
 
 	transition: border-color 0.3s;
 }
 
 .field__input::placeholder {
-	color: #939199;
+	color: var(--color-gray);
 	font-size: 14px;
 	font-weight: 400;
 }
 
 .field__input:hover {
-	border-color: #939199;
+	border-color: var(--color-gray);
 }
 
 .field__input:focus {
-	border-color: #775CE5;
+	border-color: var(--color-main);
 }
 
 .field__input--error {
-	border-color: #F23152 !important;
-	color: #F23152;
+	border-color: var(--color-red) !important;
+	color: var(--color-red);
 }
 
 .field__wrapper {
@@ -82,7 +82,7 @@
 
 
 .field__input--focus {
-	border-color: #775CE5;
+	border-color: var(--color-main);
 }
 
 .field__input--before::before {

@@ -32,7 +32,7 @@
 .info__title {
 	font-size: 16px;
 	font-weight: 500;
-	color: #1d1d1f;
+	color: var(--color-black);
 }
 
 .info__subtitle-block-- {
@@ -48,14 +48,14 @@
 .info__subtitle {
 	font-size: 12px;
 	font-weight: 400;
-	color: #939199;
+	color: var(--color-gray);
 }
 
 .info__subtitle--decor {
 	display: inline-block;
 	height: 4px;
 	width: 4px;
-	background-color: #939199;
+	background-color: var(--color-gray);
 	border-radius: 4px;
 }
 
