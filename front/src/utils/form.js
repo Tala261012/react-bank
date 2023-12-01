@@ -1,3 +1,7 @@
+const REG_EXP_NAME = new RegExp(
+  /^([A-ZА-Я]{1}[a-zа-яё]{1,23}\s{1}[A-ZА-Я]{1}[a-zа-яё]{1,23})|([A-ZА-Я]{1}[a-zа-яё]{1,23})$/
+);
+
 const REG_EXP_EMAIL = new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,}$/);
 
 const REG_EXP_PASSWORD = new RegExp(
@@ -11,6 +15,7 @@ const REG_EXP_CASH = new RegExp(/^[^-]*$/);
 // в этом объекте будут все данные одного пользователя
 export class SignupForm {
   static FIELD_NAME = {
+    NAME: "name",
     EMAIL: "email",
     PASSWORD: "password",
     PASSWORD_CONFIRM: "passwordConfirm",
@@ -20,6 +25,7 @@ export class SignupForm {
   static FIELD_ERROR = {
     IS_EMPTY: "Введите значение в поле",
     IS_BIG: "Слишком длинное значение, уберите лишнее",
+    NAME: "Введите корректно имя. С заглавной буквы на латинице либо на кирилице, без цифр. Одно или два слова.",
     EMAIL: "Введите корректное значение e-mail адреса",
     PASSWORD:
       "Пароль должен состоять не менее, чем из 8 символов, включая хотя бы одну цифру, строчную и заглавную букву.",
@@ -36,6 +42,12 @@ export class SignupForm {
 
     if (String(value).length > 30) {
       return this.FIELD_ERROR.IS_BIG;
+    }
+
+    if (name === this.FIELD_NAME.NAME) {
+      if (!REG_EXP_NAME.test(String(value))) {
+        return this.FIELD_ERROR.NAME;
+      }
     }
 
     if (name === this.FIELD_NAME.EMAIL) {
@@ -86,6 +98,7 @@ export class SignupForm {
 
   static convertData = () => {
     return JSON.stringify({
+      [this.FIELD_NAME.NAME]: this.value[this.FIELD_NAME.NAME].trim(),
       [this.FIELD_NAME.EMAIL]: this.value[this.FIELD_NAME.EMAIL],
       [this.FIELD_NAME.PASSWORD]: this.value[this.FIELD_NAME.PASSWORD],
     });
@@ -525,6 +538,7 @@ export class BalanceReceiveForm {
   static FIELD_NAME = {
     TOKEN: "token",
     TYPE: "type",
+    NAME: "name",
     ADDRESS: "address",
     CASH: "cash",
   };
@@ -583,6 +597,7 @@ export class BalanceReceiveForm {
   };
 
   static setAddress = (address) => {
+    this.value[this.FIELD_NAME.NAME] = String(address);
     this.value[this.FIELD_NAME.ADDRESS] = String(address);
   };
 
@@ -592,6 +607,7 @@ export class BalanceReceiveForm {
     return JSON.stringify({
       [this.FIELD_NAME.TOKEN]: this.value[this.FIELD_NAME.TOKEN],
       [this.FIELD_NAME.TYPE]: this.value[this.FIELD_NAME.TYPE],
+      [this.FIELD_NAME.NAME]: this.value[this.FIELD_NAME.NAME],
       [this.FIELD_NAME.ADDRESS]: this.value[this.FIELD_NAME.ADDRESS],
       [this.FIELD_NAME.CASH]: Number(this.value[this.FIELD_NAME.CASH]),
     });

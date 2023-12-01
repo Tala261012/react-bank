@@ -30,6 +30,8 @@ export default function Component() {
   const getSum = async () => {
     const state = Object.entries(auth)[0][1];
 
+    console.log(state);
+
     setAlertClass({ status: "progress", text: "Loading..." });
 
     try {
@@ -93,17 +95,6 @@ export default function Component() {
     navigate(`/transaction/${id}`);
   };
 
-  const getNameFromAddress = (address) => {
-    switch (address) {
-      default:
-        return "User";
-      case "Stripe":
-        return "Stripe";
-      case "Coinbase":
-        return "Coinbase";
-    }
-  };
-
   const getIconFromAddress = (address) => {
     switch (address) {
       default:
@@ -119,7 +110,7 @@ export default function Component() {
     .map((item) => ({
       id: item.id,
       date: getDateShort(item.date),
-      name: getNameFromAddress(item.address),
+      name: item.name,
       short: getTypeShort(item.type),
       icon: getIconFromAddress(item.address),
       cash: item.cash,

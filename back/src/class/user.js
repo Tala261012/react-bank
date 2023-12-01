@@ -4,15 +4,16 @@ class User {
   // для генерации id
   static #count = 1
 
-  constructor(email, password) {
+  constructor(name, email, password) {
     this.id = User.#count++
+    this.name = name
     this.email = String(email).toLowerCase()
     this.password = String(password)
     this.isConfirm = false
   }
 
-  static create(email, password) {
-    const newUser = new User(email, password)
+  static create(name, email, password) {
+    const newUser = new User(name, email, password)
     this.#list.push(newUser)
 
     return newUser

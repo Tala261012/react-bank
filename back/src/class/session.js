@@ -5,6 +5,7 @@ class Session {
   constructor(user) {
     this.token = Session.generateCode()
     this.user = {
+      name: user.name,
       email: user.email,
       isConfirm: user.isConfirm,
     }

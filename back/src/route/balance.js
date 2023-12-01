@@ -45,9 +45,9 @@ router.get('/balance', function (req, res) {
 // ========================================================================
 
 router.post('/balance-receive', function (req, res) {
-  const { token, type, address, cash } = req.body
+  const { token, type, name, address, cash } = req.body
 
-  if (!token || !type || !address || !cash) {
+  if (!token || !type || !name || !address || !cash) {
     return res.status(400).json({
       message: 'Ошибка. Обязательные поля отсутствуют.',
     })
@@ -68,6 +68,7 @@ router.post('/balance-receive', function (req, res) {
       token,
       notification.date,
       type,
+      name,
       address,
       cash,
     )
@@ -144,20 +145,14 @@ router.post('/balance-send', function (req, res) {
 
     const notification = Notification.create(token, type)
 
-    const newBalance = Balance.create(
-      token,
-      notification.date,
-      type,
-      address,
-      cash,
-    )
-
-    bank.sum -= cash
-
     //-------------------------------------------------------------------
+    let receiverName = 'Unknown user'
+
     const receiverSession = Session.getByEmail(address)
 
     if (receiverSession) {
+      receiverName = receiverSession.user.name
+
       const receiverNotification = Notification.create(
         receiverSession.token,
         'GET_MONEY',
@@ -167,6 +162,7 @@ router.post('/balance-send', function (req, res) {
         receiverSession.token,
         receiverNotification.date,
         'GET_MONEY',
+        session.user.name,
         session.user.email,
         cash,
       )
@@ -177,6 +173,17 @@ router.post('/balance-send', function (req, res) {
 
       receiverBank.sum += cash
     }
+
+    const newBalance = Balance.create(
+      token,
+      notification.date,
+      type,
+      receiverName,
+      address,
+      cash,
+    )
+
+    bank.sum -= cash
     //-------------------------------------------------------------------
 
     return res.status(200).json({
