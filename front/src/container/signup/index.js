@@ -198,6 +198,7 @@ export default function Component() {
           label={"Name:"}
           placeholder={"Enter your name"}
           onInput={handleNameInput}
+          autoFocus={true}
         />
         <span ref={nameSpan} className="form__error">
           Error

@@ -142,6 +142,7 @@ export default function Component() {
           label={"Email:"}
           placeholder={"Enter your email"}
           onInput={handleEmailInput}
+          autoFocus={true}
         />
         <span ref={emailSpan} className="form__error">
           Error

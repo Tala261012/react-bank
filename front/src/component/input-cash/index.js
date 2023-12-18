@@ -11,6 +11,7 @@ export default function Component({
   onInput,
   // чтоб не было label, включить: labelOff={'field__label--off'}
   labelOff = "",
+  // autoFocus = false,
 }) {
   const [inputValue, setInputValue] = useState("");
 
@@ -24,7 +25,9 @@ export default function Component({
   };
 
   const handleFocus = () => {
-    field.current.classList.toggle("field__input--focus", true);
+    if (field.current) {
+      field.current.classList.toggle("field__input--focus", true);
+    }
   };
 
   const handleBlur = () => {
@@ -51,6 +54,7 @@ export default function Component({
         }
       >
         <input
+          // autoFocus={autoFocus}
           className={"field__empty"}
           name={name}
           type={"number"}
