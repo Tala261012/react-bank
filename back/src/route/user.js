@@ -13,11 +13,11 @@ const { Bank } = require('../class/bank')
 
 router.post('/signup', function (req, res) {
   try {
-    const { email, password } = req.body
+    const { name, email, password } = req.body
 
     // console.log(email, password)
 
-    if (!email || !password) {
+    if (!name || !email || !password) {
       return res.status(400).json({
         message:
           'Ошибка! Не все обязательные поля заполнены.',
@@ -32,7 +32,7 @@ router.post('/signup', function (req, res) {
       })
     }
 
-    const newUser = User.create(email, password)
+    const newUser = User.create(name, email, password)
 
     // console.log(newUser)
 

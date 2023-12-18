@@ -56,6 +56,15 @@ export default function Component() {
       setIsDisabled(true);
 
       Object.entries(SignupForm.error).forEach(([name, value]) => {
+        if (name === SignupForm.FIELD_NAME.NAME) {
+          setError(
+            SignupForm,
+            SignupForm.FIELD_NAME.NAME,
+            setNameError,
+            nameSpan
+          );
+        }
+
         if (name === SignupForm.FIELD_NAME.EMAIL) {
           setError(
             SignupForm,
@@ -102,6 +111,7 @@ export default function Component() {
   const checkDisabled = () => {
     if (
       Object.keys(SignupForm.error).length === 0 &&
+      name !== "" &&
       email !== "" &&
       password !== "" &&
       passwordConfirm !== ""
@@ -110,6 +120,20 @@ export default function Component() {
     } else {
       setIsDisabled(true);
     }
+  };
+
+  const nameSpan = useRef(null);
+  const [nameError, setNameError] = useState(false);
+  const [name, setName] = useState("");
+
+  const handleNameInput = (value) => {
+    SignupForm.change(SignupForm.FIELD_NAME.NAME, value);
+
+    setError(SignupForm, SignupForm.FIELD_NAME.NAME, setNameError, nameSpan);
+
+    setName(value);
+
+    checkDisabled();
   };
 
   const emailSpan = useRef(null);
@@ -166,6 +190,20 @@ export default function Component() {
 
   return (
     <Form>
+      <div>
+        <InputItem
+          isError={nameError}
+          name={"name"}
+          type={"text"}
+          label={"Name:"}
+          placeholder={"Enter your name"}
+          onInput={handleNameInput}
+        />
+        <span ref={nameSpan} className="form__error">
+          Error
+        </span>
+      </div>
+
       <div>
         <InputItem
           isError={emailError}
