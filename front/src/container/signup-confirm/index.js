@@ -123,7 +123,7 @@ export default function Component() {
   };
 
   return (
-    <Form>
+    <Form onKeyDown={handleSubmit}>
       <div>
         <InputItem
           isError={codeError}
