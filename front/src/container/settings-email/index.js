@@ -141,7 +141,7 @@ export default function Component() {
   };
 
   return (
-    <FormSmall>
+    <FormSmall onKeyDown={handleSubmit}>
       <h2 className="sub-title">Change email</h2>
       <div>
         <InputItem
