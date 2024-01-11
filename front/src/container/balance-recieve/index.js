@@ -122,6 +122,7 @@ export default function Component() {
             placeholder={"Enter amount"}
             onInput={handleCashInput}
             labelOff={"field__label--off"}
+            // autoFocus={true}
           />
           <span ref={cashSpan} className="form__error">
             Error

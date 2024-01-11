@@ -10,6 +10,7 @@ export default function Component({
   placeholder = "",
   isError = false,
   onInput,
+  autoFocus = false,
 }) {
   const [inputValue, setInputValue] = useState("");
   const handleInput = (event) => {
@@ -36,6 +37,7 @@ export default function Component({
         type={type}
         placeholder={placeholder}
         onInput={handleInput}
+        autoFocus={autoFocus}
       />
     </div>
   );

@@ -6,13 +6,13 @@
 	width: 393px;
 	min-width: 393px;
 	min-height: 852px;
+	max-height: 100%;
 
 	position: relative;
 }
 
 .bg-wallet {
 	width: 393px;
-	height: 201px;
 	background-image: url("../../../public/img/wallet-background.png");
 	background-repeat: no-repeat;
 	background-size: contain;
